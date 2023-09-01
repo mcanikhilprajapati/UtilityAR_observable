@@ -13,7 +13,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -27,14 +26,11 @@ import com.microsoft.azure.storage.blob.BlobContainerPermissions;
 import com.microsoft.azure.storage.blob.BlobContainerPublicAccessType;
 import com.microsoft.azure.storage.blob.CloudBlobClient;
 import com.microsoft.azure.storage.blob.CloudBlobContainer;
-import com.microsoft.azure.storage.blob.CloudBlockBlob;
 import com.utilityar.app.R;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 
 
 public class HomeScreenActivity extends AppCompatActivity {
@@ -135,6 +131,13 @@ public class HomeScreenActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, permissionsToAskFor.toArray(new String[0]), 1);
         }
     }
+
+
+    //TODO
+    // https://github.com/Azure/azure-storage-android/blob/master/microsoft-azure-storage-samples/src/com/microsoft/azure/storage/samples/blob/BlobGettingStartedTask.java
+    //https://learn.microsoft.com/en-us/java/api/overview/azure/storage?view=azure-java-stable
+
+    //https://learn.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-java?tabs=powershell%2Cmanaged-identity%2Croles-azure-portal%2Csign-in-azure-cli
 
 
     //<UPLOAD IMAGE>
