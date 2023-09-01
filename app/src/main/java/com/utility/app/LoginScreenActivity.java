@@ -32,9 +32,9 @@ public class LoginScreenActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_login_screen);
 
@@ -55,24 +55,24 @@ public class LoginScreenActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void initUI() {
-//        main_container = findViewById(R.id.main_container);
-//        progressBar = findViewById(R.id.progressBar);
-//        btnLogin = findViewById(R.id.btn_login);
-//        edtPassword = findViewById(R.id.edt_password);
-//        edtUsername = findViewById(R.id.edt_username);
-//
-//        btnLogin.setOnClickListener(this);
+        main_container = findViewById(R.id.main_container);
+        progressBar = findViewById(R.id.progressBar);
+        btnLogin = findViewById(R.id.btn_login);
+        edtPassword = findViewById(R.id.edt_password);
+        edtUsername = findViewById(R.id.edt_username);
+
+        btnLogin.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-//        switch (v.getId()) {
-//            case R.id.btn_login:
-//                if (validation())
-//                    doLogin();
-//                break;
-//
-//        }
+        switch (v.getId()) {
+            case R.id.btn_login:
+                if (validation())
+                    doLogin();
+                break;
+
+        }
     }
 
     private void doLogin() {
