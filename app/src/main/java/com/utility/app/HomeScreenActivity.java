@@ -129,6 +129,7 @@ public class HomeScreenActivity extends AppCompatActivity {
         btnChangeUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SessionManager.getInstance().logout();
                 Intent intent = new Intent(getApplicationContext(), LoginScreenActivity.class);
                 startActivity(intent);
             }

@@ -96,7 +96,7 @@
                 app:fontFamily="@font/roboto_medium" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_login1"
+                android:id="@+id/btn_headset_mode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"

@@ -19,7 +19,7 @@ public class ApiClient {
     public static Call<LoginResponse> loginAPI(Context context, boolean showLoader, LoginRequest params) {
         return getClient().login(params);
     }
-    public static Call<TokenResponse> getToken(Context context, boolean showLoader, String authToken) {
-        return getClient().getToken(authToken);
+    public static Call<TokenResponse> getToken(Context context, boolean showLoader) {
+        return getClient().getToken();
     }
 }

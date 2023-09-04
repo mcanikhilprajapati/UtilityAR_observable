@@ -21,7 +21,7 @@ public interface ApiInterface {
     Call<LoginResponse> login(@Body LoginRequest params);
 
     @GET("auth/token")
-    Call<TokenResponse> getToken(@Header("Authorization") String authHeader);
+    Call<TokenResponse> getToken();
 
 
 
