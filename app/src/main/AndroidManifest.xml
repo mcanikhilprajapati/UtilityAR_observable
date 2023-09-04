@@ -25,15 +25,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name="com.utility.app.FinalObservationActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.utility.app.StepsDetailsScreenActivity"
+            android:exported="false" />
+        <activity
             android:name="com.utility.app.LoginScreenActivity"
             android:exported="true"
             android:screenOrientation="nosensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <!--
 Our Calling SDK depends on the Apache HTTP SDK.
 When targeting Android SDK 28+, this library needs to be explicitly referenced.
@@ -46,7 +52,15 @@ See https://developer.android.com/about/versions/pie/android-9.0-changes-28#apac
         <activity
             android:name="com.utility.app.HomeScreenActivity"
             android:exported="true"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.utility.app.ProcedureScreenActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.utility.app.CompleteScreenActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

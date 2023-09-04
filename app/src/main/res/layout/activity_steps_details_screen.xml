@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context="com.utility.app.LoginScreenActivity">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_medium"
+            android:text="Step Name here"
+            android:textAlignment="center"
+            android:textColor="#000"
+            android:textSize="25sp"></TextView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="10dp"
+            android:background="@color/colorPrimary"></View>
+
+        <ImageView
+            android:background="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:scaleType="fitXY"
+            app:tint="#AAA8A8" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="10dp"
+            android:background="@color/colorPrimary"></View>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <TextView
+        android:id="@+id/txt_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_layout"
+        android:layout_below="@+id/top_layout"
+        android:padding="10dp"
+        android:text="Adequate supervision provided to ensure control measures remain valid for the duration of the work" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/bottom_layout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="15dp">
+
+
+            <Button
+                android:textAllCaps="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:drawableTop="@drawable/text"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Text"
+                android:textSize="16sp"></Button>
+
+            <Button
+                android:textAllCaps="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:drawableTop="@drawable/yes"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Yes"
+                android:textSize="16sp"></Button>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:drawableTop="@drawable/camera"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Camera"
+                android:textAllCaps="false"
+                android:textSize="16sp"></Button>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/bottom_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="15dp">
+
+
+            <Button
+                android:textAllCaps="false"
+                android:id="@+id/btn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="130dp"
+                android:background="#00000000"
+                android:drawableTop="@drawable/back"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Back"
+                android:textSize="16sp"></Button>
+
+            <Button
+                android:layout_marginHorizontal="15dp"
+                android:textAllCaps="false"
+                android:id="@+id/btn_change_user"
+                android:layout_width="wrap_content"
+                android:layout_height="130dp"
+                android:background="#00000000"
+                android:drawableTop="@drawable/home"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Home"
+                android:textSize="16sp"></Button>
+
+            <Button
+
+                android:textAllCaps="false"
+                android:id="@+id/btn_next"
+                android:layout_width="wrap_content"
+                android:layout_height="130dp"
+                android:background="#00000000"
+                android:drawableTop="@drawable/forward_large"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Next"
+                android:textSize="16sp"></Button>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</RelativeLayout>

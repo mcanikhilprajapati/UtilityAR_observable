@@ -39,16 +39,15 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-//TODO https://www.digitalocean.com/community/tutorials/android-recyclerview-load-more-endless-scrolling
 
-public class HomeScreenActivity extends AppCompatActivity {
+public class ProcedureScreenActivity extends AppCompatActivity {
 
 
     Uri imageUri = null;
     private ArrayList<Observations> courseArrayList;
     private RecyclerView courseRV;
     private procedureAdapter procedureAdapter;
-    private Button btn_make_observation,btnChangeUser;
+    private Button btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,25 +55,24 @@ public class HomeScreenActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_procedure);
 
 
 //        getAllPermissions();
         initUI();
 // initializing our array list.
         courseArrayList = new ArrayList<>();
-        courseArrayList.add(new Observations("Main Board 1"));
-        courseArrayList.add(new Observations("Boiler 2"));
-        courseArrayList.add(new Observations("Risk Assessment"));
-        courseArrayList.add(new Observations("PPE Checker"));
-        courseArrayList.add(new Observations("Surveying"));
-        courseArrayList.add(new Observations("Pump1"));
+        courseArrayList.add(new Observations("Board Maintenance"));
+        courseArrayList.add(new Observations("Boiler blow down"));
+        courseArrayList.add(new Observations("Observational Survey"));
+        courseArrayList.add(new Observations("PPE Checker - Working At Height"));
+        courseArrayList.add(new Observations("Pump Workflow"));
 
         // on below line we are adding our array list to our adapter class.
         procedureAdapter = new procedureAdapter(this, courseArrayList, new OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Intent intent = new Intent(getApplicationContext(), ProcedureScreenActivity.class);
+                Intent intent = new Intent(getApplicationContext(), StepsDetailsScreenActivity.class);
                 startActivity(intent);
             }
 
@@ -113,24 +111,13 @@ public class HomeScreenActivity extends AppCompatActivity {
 
     private void initUI() {
         // initializing our variables.
-        btnChangeUser = findViewById(R.id.btn_change_user);
-        btn_make_observation = findViewById(R.id.btn_make_observation);
+        btnBack = findViewById(R.id.btn_back);
         courseRV = findViewById(R.id.idRVCourses);
-
-        btn_make_observation.setOnClickListener(new View.OnClickListener() {
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(getApplicationContext(), ProcedureScreenActivity.class);
-                Intent intent = new Intent(getApplicationContext(), FinalObservationActivity.class);
-                startActivity(intent);
-            }
-        });
+                finish();
 
-        btnChangeUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), LoginScreenActivity.class);
-                startActivity(intent);
             }
         });
     }

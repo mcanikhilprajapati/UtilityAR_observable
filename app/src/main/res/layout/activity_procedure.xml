@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_medium"
-            android:text="Main Menu"
+            android:text="Procedures / Data Menu"
             android:textAlignment="center"
             android:textColor="#000"
             android:textSize="25sp"></TextView>
@@ -34,17 +34,18 @@
             app:tint="#000000" />
 
 
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/idRVCourses"
+        android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/bottom_layout"
-        android:layout_below="@+id/top_layout"
         android:nestedScrollingEnabled="false"
 
-        android:padding="10dp" />
+        android:layout_below="@+id/top_layout" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/bottom_layout"
@@ -55,29 +56,14 @@
         android:orientation="vertical"
         android:padding="15dp">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_make_observation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/button_style"
-            android:maxLines="1"
-            android:paddingHorizontal="40dp"
-            android:text="Make an Observation"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            app:fontFamily="@font/roboto_medium" />
-
         <Button
-            android:id="@+id/btn_change_user"
+            android:id="@+id/btn_back"
             android:layout_width="wrap_content"
             android:layout_height="130dp"
             android:background="#00000000"
-            android:drawableTop="@drawable/changeuser"
+            android:drawableTop="@drawable/back"
             android:fontFamily="@font/roboto_medium"
-            android:text="Change User"
+            android:text="Back"
             android:textSize="16sp"></Button>
     </androidx.appcompat.widget.LinearLayoutCompat>
 

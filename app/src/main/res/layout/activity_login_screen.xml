@@ -14,7 +14,7 @@
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/main_container"
@@ -42,7 +42,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Your Email"
-                android:textColor="#AEACAC"></TextView>
+                android:textColor="#888787"
+                app:fontFamily="@font/roboto_medium"></TextView>
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edt_username"
@@ -62,14 +63,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="Password"
-                android:textColor="#AEACAC"></TextView>
+                android:textColor="#888787"
+                app:fontFamily="@font/roboto_medium"></TextView>
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edt_password"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="20dp"
-                android:hint="Password"
+                android:hint="******"
                 android:imeActionLabel="Go"
                 android:imeOptions="actionDone"
                 android:inputType="textWebPassword"
@@ -80,7 +82,6 @@
             </androidx.appcompat.widget.AppCompatEditText>
 
             <androidx.appcompat.widget.AppCompatButton
-
                 android:id="@+id/btn_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

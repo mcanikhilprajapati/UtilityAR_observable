@@ -1,6 +1,7 @@
 package com.utility.app;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -68,8 +69,9 @@ public class LoginScreenActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_login:
-                if (validation())
-                    doLogin();
+                gotoLoginScreen();
+//                if (validation())
+//                    doLogin();
                 break;
 
         }
@@ -115,7 +117,7 @@ public class LoginScreenActivity extends AppCompatActivity implements View.OnCli
         });
     }
 
-//    //Get new access token everytime when user open app
+    //    //Get new access token everytime when user open app
 //    private void getToken(String jwt) {
 //        progressBar.setVisibility(View.VISIBLE);
 //        ApiClient.getToken(getApplicationContext(), true, "Bearer " + jwt).enqueue(new Callback<TokenResponse>() {
@@ -141,11 +143,11 @@ public class LoginScreenActivity extends AppCompatActivity implements View.OnCli
 //        });
 //    }
 //
-//    private void gotoLoginScreen() {
-//        Intent intent = new Intent(getApplicationContext(), HomeScreenActivity.class);
-//        startActivity(intent);
-//        finish();
-//    }
+    private void gotoLoginScreen() {
+        Intent intent = new Intent(getApplicationContext(), HomeScreenActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
     private boolean validation() {
         if (TextUtils.isEmpty(edtUsername.getText().toString())) {
