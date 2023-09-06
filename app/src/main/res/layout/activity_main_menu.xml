@@ -36,15 +36,33 @@
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/idRVCourses"
+    <TextView
+        android:id="@+id/txt_nodata"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/top_layout"
+        android:padding="10dp"
+        android:text="There is nothing to display"
+        android:textAlignment="center"
+        android:visibility="gone">
+
+    </TextView>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swiperefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/bottom_layout"
-        android:layout_below="@+id/top_layout"
-        android:nestedScrollingEnabled="false"
+        android:layout_below="@+id/top_layout">
 
-        android:padding="10dp" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/idRVCourses"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:nestedScrollingEnabled="false"
+            android:padding="10dp" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/bottom_layout"
@@ -80,5 +98,6 @@
             android:text="Change User"
             android:textSize="16sp"></Button>
     </androidx.appcompat.widget.LinearLayoutCompat>
+
 
 </RelativeLayout>

@@ -21,7 +21,7 @@ public class CompleteScreenActivity extends AppCompatActivity {
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), HomeScreenActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MainMenuScreenActivity.class);
                 startActivity(intent);
             }
         });

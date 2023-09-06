@@ -161,7 +161,7 @@ public class LoginScreenActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void gotoLoginScreen() {
-        Intent intent = new Intent(getApplicationContext(), HomeScreenActivity.class);
+        Intent intent = new Intent(getApplicationContext(), MainMenuScreenActivity.class);
         startActivity(intent);
         finish();
     }
