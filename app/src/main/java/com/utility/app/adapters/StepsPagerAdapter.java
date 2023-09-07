@@ -1,16 +1,21 @@
 package com.utility.app.adapters;
 
 import android.content.Context;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.VideoView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.OptIn;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.media3.common.MediaItem;
+import androidx.media3.common.util.UnstableApi;
+import androidx.media3.exoplayer.ExoPlayer;
+import androidx.media3.ui.PlayerView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -43,7 +48,7 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull StepsPagerAdapter.ViewHolder holder, int position) {
+    public void  onBindViewHolder(@NonNull StepsPagerAdapter.ViewHolder holder, int position) {
         // setting data to our text views from our modal class.
         StepsResponse stepsResponse = arrayList.get(position);
         holder.txt_step_name.setText(stepsResponse.getName());
@@ -53,13 +58,17 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
             Glide.with(context).load(stepsResponse.getMedia()).into(holder.img_task_image);
         }
         if (stepsResponse.getMediaType().equals("VIDEO")) {
-            holder.videoView.setVisibility(View.VISIBLE);
-            holder.videoView.setVideoPath(stepsResponse.getMedia()); //the string of the URL mentioned above
-            holder.videoView.requestFocus();
-            holder.videoView.start();
-            holder.videoView.canSeekBackward();
-            holder.videoView.canPause();
-            holder.videoView.canSeekForward();
+            holder.playerView.setVisibility(View.VISIBLE);
+            holder.playerView.setFocusable(true);
+            ExoPlayer player = new ExoPlayer.Builder(context).build();
+            holder.playerView.setPlayer(player);
+//            holder.playerView.setUseController(true);
+            MediaItem mediaItem = MediaItem.fromUri(stepsResponse.getMedia());
+            player.setMediaItem(mediaItem);
+            player.prepare();
+            player.play();
+
+
         }
         if (position == 0)
             holder.btn_back.setVisibility(View.INVISIBLE);
@@ -84,6 +93,8 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
 
     }
 
+
+
     @Override
     public int getItemCount() {
         return arrayList.size();
@@ -94,7 +105,10 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
         private Button btn_next, btn_back, btn_home;
         private TextView txt_step_name, txt_description;
         private AppCompatImageView img_task_image;
-        private VideoView videoView;
+        private static final String KEY_ADS_LOADER_STATE = "ads_loader_state";
+        private static final String SAMPLE_ASSET_KEY = "c-rArva4ShKVIAkNfy6HUQ";
+
+        private PlayerView playerView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -105,7 +119,7 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
             btn_back = itemView.findViewById(R.id.btn_back);
             btn_home = itemView.findViewById(R.id.btn_home);
             img_task_image = itemView.findViewById(R.id.img_task_image);
-            videoView = itemView.findViewById(R.id.videoView);
+            playerView = itemView.findViewById(R.id.videoView);
 
         }
     }

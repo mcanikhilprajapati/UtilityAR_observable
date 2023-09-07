@@ -44,12 +44,13 @@
                 android:scaleType="fitXY"
                 android:visibility="gone" />
 
-            <VideoView
-                android:visibility="gone"
+            <androidx.media3.ui.PlayerView
                 android:id="@+id/videoView"
                 android:layout_width="wrap_content"
-                android:layout_height="250dp"></VideoView>
 
+                android:layout_height="250dp"
+                android:visibility="gone" />
+            <!--app:use_controller="true"-->
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
