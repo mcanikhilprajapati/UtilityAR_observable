@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -15,7 +14,9 @@
         android:name="android.hardware.camera"
         android:required="true" />
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
 
     <application
         android:name="com.utility.app.App"
@@ -23,17 +24,19 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:usesCleartextTraffic="true"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-<!--        android:networkSecurityConfig="@xml/network_security_config"-->
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <!--        android:networkSecurityConfig="@xml/network_security_config"-->
 
         <activity
             android:name="com.utility.app.FinalObservationActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="nosensor" />
         <activity
             android:name="com.utility.app.StepsDetailsScreenActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="nosensor" />
         <activity
             android:name="com.utility.app.LoginScreenActivity"
             android:exported="true"
@@ -56,15 +59,15 @@ See https://developer.android.com/about/versions/pie/android-9.0-changes-28#apac
         <activity
             android:name="com.utility.app.MainMenuScreenActivity"
             android:exported="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="nosensor" />
         <activity
             android:name="com.utility.app.ProcedureScreenActivity"
             android:exported="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="nosensor" />
         <activity
             android:name="com.utility.app.CompleteScreenActivity"
             android:exported="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="nosensor" />
     </application>
 
 </manifest>

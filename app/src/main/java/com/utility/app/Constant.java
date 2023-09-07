@@ -10,4 +10,5 @@ public class Constant {
     public static final String imagePath = "pre defined path here";
     //intent PARAMS
     public static final String menuID = "menuID";
+    public static final String procedureID = "procedureID";
 }

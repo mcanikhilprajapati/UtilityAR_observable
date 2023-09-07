@@ -5,6 +5,7 @@ import android.content.Context;
 import com.utility.app.App;
 import com.utility.app.models.MainMenuResponse;
 import com.utility.app.models.ProcedureResponse;
+import com.utility.app.models.StepsResponse;
 import com.utility.app.models.request.LoginRequest;
 import com.utility.app.models.LoginResponse;
 import com.utility.app.models.TokenResponse;
@@ -34,5 +35,8 @@ public class ApiClient {
     }
     public static Call<ArrayList<ProcedureResponse>> getProcedureuList(Context context, boolean showLoader, String data ) {
         return getClient().getProcedureList(data);
+    }
+    public static Call<ArrayList<StepsResponse>> getStepsList(Context context, boolean showLoader, String data ) {
+        return getClient().getStepsList(data);
     }
 }

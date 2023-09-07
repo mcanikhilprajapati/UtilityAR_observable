@@ -45,7 +45,7 @@ public class ProcedureScreenActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_procedure);
-        Intent myIntent = getIntent(); // gets the previously created intent
+        Intent myIntent = getIntent();
         menuID = myIntent.getStringExtra(Constant.menuID);
         initUI();
 
@@ -53,6 +53,7 @@ public class ProcedureScreenActivity extends AppCompatActivity {
             @Override
             public void onItemClick(int position) {
                 Intent intent = new Intent(getApplicationContext(), StepsDetailsScreenActivity.class);
+                intent.putExtra(Constant.procedureID,procedureList.get(position).getId());
                 startActivity(intent);
             }
 

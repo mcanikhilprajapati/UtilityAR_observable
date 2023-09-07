@@ -69,6 +69,7 @@ public class App extends Application {
                     .header("Accept", "application/json")
                     .header("Authorization", "Bearer " + SessionManager.pref.getString(JWT, "")).method(original.method(), original.body());
             Request request = requestBuilder.build();
+
             return chain.proceed(request);
         });
 //        httpClient.addInterceptor(new UnauthorisedInterceptor(context));

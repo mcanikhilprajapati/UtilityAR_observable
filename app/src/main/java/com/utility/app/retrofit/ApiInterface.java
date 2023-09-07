@@ -4,20 +4,18 @@ package com.utility.app.retrofit;
 import com.utility.app.models.LoginResponse;
 import com.utility.app.models.MainMenuResponse;
 import com.utility.app.models.ProcedureResponse;
+import com.utility.app.models.StepsResponse;
 import com.utility.app.models.TokenResponse;
 import com.utility.app.models.request.LoginRequest;
-import com.utility.app.models.request.ProcedureRequest;
 
 import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
-import retrofit2.http.QueryMap;
 
 public interface ApiInterface {
 
@@ -34,5 +32,8 @@ public interface ApiInterface {
 
     @GET("procedure/{menuId}")
     Call<ArrayList<ProcedureResponse>> getProcedureList(@Path("menuId") String id);
+
+    @GET("steps/{pid}")
+    Call<ArrayList<StepsResponse>> getStepsList(@Path("pid") String id);
 
 }
