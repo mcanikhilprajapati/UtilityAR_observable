@@ -99,7 +99,7 @@ public class StepsDetailsScreenActivity extends AppCompatActivity implements OnV
     public void onNextClick(int position) {
 
         if (position >= stepsList.size() - 1) {
-            Intent intent = new Intent(StepsDetailsScreenActivity.this, FinalObservationActivity.class);
+            Intent intent = new Intent(StepsDetailsScreenActivity.this, CompleteScreenActivity.class);
             startActivity(intent);
         } else {
             viewPager.setCurrentItem(position + 1);
@@ -124,59 +124,12 @@ public class StepsDetailsScreenActivity extends AppCompatActivity implements OnV
         finish();
     }
 
-    /**
-     * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
-     * sequence.
-     */
-    private class ScreenSlidePagerAdapter extends PagerAdapter {
-        ArrayList<StepsResponse> stepsList;
-        private Context mContext;
-
-        public ScreenSlidePagerAdapter(Context context, ArrayList<StepsResponse> stepsList) {
-            mContext = context;
-            stepsList = stepsList;
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView((View) object);
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return view == object;
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, final int position) {
-            LayoutInflater inflater = LayoutInflater.from(mContext);
-            ViewGroup view = (ViewGroup) inflater.inflate(R.layout.row_item_viewpager_steps, container, false);
-            StepsResponse stepsResponse = stepsList.get(position);
-
-            ((TextView) view.findViewById(R.id.txt_step_name))
-                    .setText(stepsResponse.getName());
-            ((TextView) view.findViewById(R.id.txt_description))
-                    .setText(stepsResponse.getDescription());
-            Button btnBack = view.findViewById(R.id.btn_back);
-            Button butNext = view.findViewById(R.id.btn_next);
-            if (position == 0) {
-                btnBack.setVisibility(View.GONE);
-            } else {
-                btnBack.setVisibility(View.VISIBLE);
-            }
-
-            if (position == stepsList.size() - 1) {
-                butNext.setVisibility(View.GONE);
-            } else {
-                butNext.setVisibility(View.VISIBLE);
-            }
-            container.addView(view);
-            return view;
-        }
-
-        @Override
-        public int getCount() {
-            return stepsList.size();
-        }
+    @Override
+    public void onTextButtonClick(int position) {
+        Intent intent = new Intent(StepsDetailsScreenActivity.this, MakeObservationActivity2.class);
+        intent.putExtra(Constant.stepID,stepsList.get(position).getId());
+        startActivity(intent);
     }
+
+
 }

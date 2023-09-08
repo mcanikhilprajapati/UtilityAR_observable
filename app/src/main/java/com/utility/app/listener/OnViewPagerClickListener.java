@@ -6,5 +6,6 @@ public interface OnViewPagerClickListener {
     void onNextClick(int position);
     void onBackClick(int position);
     void onHomeClick(int position);
+    void onTextButtonClick(int position);
 
 }

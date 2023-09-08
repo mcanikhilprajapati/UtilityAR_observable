@@ -84,7 +84,11 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
 
 
         }
-
+        holder.btnTextAdd.setOnClickListener(v -> {
+            if (onViewPagerClickListener != null) {
+                onViewPagerClickListener.onTextButtonClick(position);
+            }
+        });
 
         holder.btn_back.setOnClickListener(v -> {
             if (onViewPagerClickListener != null) {
@@ -112,11 +116,9 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         // creating variables for our text views.
-        private Button btn_next, btn_back, btn_home;
+        private Button btn_next, btn_back, btn_home,btnTextAdd;
         private TextView txt_step_name, txt_description, txt_url;
         private AppCompatImageView img_task_image;
-        private static final String KEY_ADS_LOADER_STATE = "ads_loader_state";
-        private static final String SAMPLE_ASSET_KEY = "c-rArva4ShKVIAkNfy6HUQ";
 
         private PlayerView playerView;
 
@@ -131,6 +133,7 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
             btn_home = itemView.findViewById(R.id.btn_home);
             img_task_image = itemView.findViewById(R.id.img_task_image);
             playerView = itemView.findViewById(R.id.videoView);
+            btnTextAdd = itemView.findViewById(R.id.btnTextAdd);
 
         }
     }

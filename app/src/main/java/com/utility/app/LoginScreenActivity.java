@@ -92,7 +92,6 @@ public class LoginScreenActivity extends AppCompatActivity implements View.OnCli
     private void doLogin() {
 
         progressBar.setVisibility(View.VISIBLE);
-
         btnLogin.setVisibility(View.GONE);
         btnHeadsetMode.setVisibility(View.GONE);
 

@@ -1,43 +1,26 @@
 package com.utility.app;
 
-import static com.utility.app.Constant.STORAGE_CONTAINER;
-import static com.utility.app.Constant.connectionString;
-import static com.utility.app.FileUtils.getFile;
-
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.microsoft.azure.storage.CloudStorageAccount;
-import com.microsoft.azure.storage.blob.BlobContainerPermissions;
-import com.microsoft.azure.storage.blob.BlobContainerPublicAccessType;
-import com.microsoft.azure.storage.blob.CloudBlobClient;
-import com.microsoft.azure.storage.blob.CloudBlobContainer;
 import com.utility.app.adapters.MainmenuAdapter;
 import com.utility.app.listener.OnItemClickListener;
 import com.utility.app.models.MainMenuResponse;
 import com.utility.app.retrofit.ApiClient;
 import com.utilityar.app.R;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -97,7 +80,7 @@ public class MainMenuScreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                Intent intent = new Intent(getApplicationContext(), ProcedureScreenActivity.class);
-                Intent intent = new Intent(getApplicationContext(), FinalObservationActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MakeObservationActivity.class);
                 startActivity(intent);
             }
         });

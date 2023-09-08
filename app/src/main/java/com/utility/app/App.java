@@ -5,6 +5,8 @@ import static com.utility.app.SessionManager.JWT;
 import android.app.Application;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.utilityar.app.BuildConfig;
 
 import java.io.IOException;
@@ -55,11 +57,6 @@ public class App extends Application {
             httpClient.addInterceptor(interceptor);
         }
 
-//        httpClient.addInterceptor(chain -> {
-//            Request request = chain.request().newBuilder().addHeader("key", "value").build();
-//            return chain.proceed(request);
-//        });
-
         httpClient.addInterceptor(chain -> {
             if (BuildConfig.DEBUG) {
                 Log.d("Token=> Bearer ", SessionManager.pref.getString(JWT, ""));
@@ -72,7 +69,7 @@ public class App extends Application {
 
             return chain.proceed(request);
         });
-//        httpClient.addInterceptor(new UnauthorisedInterceptor(context));
+        httpClient.addInterceptor(new UnauthorizedInterceptor());
         OkHttpClient client = httpClient.build();
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -80,5 +77,16 @@ public class App extends Application {
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build();
+    }
+    class UnauthorizedInterceptor implements Interceptor {
+
+        @Override
+        public Response intercept(@NonNull Chain chain) throws IOException {
+            Response response = chain.proceed(chain.request());
+            if (response.code() == 401) {
+                Log.d("Lougout","Login fail "+response.code());
+            }
+            return response;
+        }
     }
 }

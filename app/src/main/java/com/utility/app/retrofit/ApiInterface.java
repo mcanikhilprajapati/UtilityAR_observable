@@ -5,8 +5,10 @@ import com.utility.app.models.LoginResponse;
 import com.utility.app.models.MainMenuResponse;
 import com.utility.app.models.ProcedureResponse;
 import com.utility.app.models.StepsResponse;
+import com.utility.app.models.SurveyResponse;
 import com.utility.app.models.TokenResponse;
 import com.utility.app.models.request.LoginRequest;
+import com.utility.app.models.request.SurveyRequest;
 
 import java.util.ArrayList;
 
@@ -36,4 +38,6 @@ public interface ApiInterface {
     @GET("steps/{pid}")
     Call<ArrayList<StepsResponse>> getStepsList(@Path("pid") String id);
 
+    @POST("completedSurvey/create")
+    Call<SurveyResponse> createSurvey(@Body SurveyRequest params);
 }
