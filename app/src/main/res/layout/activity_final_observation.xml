@@ -37,7 +37,6 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/bottom_layout"
         android:layout_width="match_parent"
@@ -49,7 +48,19 @@
 
 
         <Button
+
             android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:drawableTop="@drawable/back"
+            android:fontFamily="@font/roboto_medium"
+            android:text="Back"
+            android:textAllCaps="false"
+            android:textSize="16sp"></Button>
+
+        <Button
+            android:id="@+id/btn_camera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#00000000"

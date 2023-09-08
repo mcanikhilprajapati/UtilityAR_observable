@@ -43,6 +43,17 @@
                 android:layout_height="250dp"
                 android:scaleType="fitXY"
                 android:visibility="gone" />
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/txt_url"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:paddingHorizontal="20dp"
+                android:textAlignment="center"
+                android:textColor="#0037FF"
+                android:clickable="true"
+                android:textSize="18sp"></TextView>
 
             <androidx.media3.ui.PlayerView
                 android:id="@+id/videoView"
@@ -130,7 +141,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="130dp"
                     android:background="#00000000"
-                    android:drawableTop="@drawable/back"
+                    android:drawableTop="@drawable/back_large"
                     android:fontFamily="@font/roboto_medium"
                     android:text="Back"
                     android:textAllCaps="false"

@@ -97,12 +97,23 @@ public class StepsDetailsScreenActivity extends AppCompatActivity implements OnV
 
     @Override
     public void onNextClick(int position) {
-        viewPager.setCurrentItem(position + 1);
+
+        if (position >= stepsList.size() - 1) {
+            Intent intent = new Intent(StepsDetailsScreenActivity.this, FinalObservationActivity.class);
+            startActivity(intent);
+        } else {
+            viewPager.setCurrentItem(position + 1);
+        }
+
     }
 
     @Override
     public void onBackClick(int position) {
-        viewPager.setCurrentItem(position - 1);
+        if (position == 0) {
+            finish();
+        } else {
+            viewPager.setCurrentItem(position - 1);
+        }
     }
 
     @Override

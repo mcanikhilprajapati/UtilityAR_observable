@@ -18,12 +18,10 @@ public class CompleteScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_complete);
         btn_back = findViewById(R.id.btn_back);
         btn_next = findViewById(R.id.btn_next);
-        btn_next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainMenuScreenActivity.class);
-                startActivity(intent);
-            }
+        btn_next.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), MainMenuScreenActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
         });
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
