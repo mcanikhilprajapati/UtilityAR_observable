@@ -52,8 +52,14 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
         StepsResponse stepsResponse = arrayList.get(position);
         holder.txt_step_name.setText(stepsResponse.getName());
         holder.txt_description.setText(stepsResponse.getDescription());
+
+        holder.img_task_image.setVisibility(View.GONE);
+        holder.txt_url.setVisibility(View.GONE);
+        holder.playerView.setVisibility(View.GONE);
+
         if (stepsResponse.getMediaType().equals("URL")) {
             holder.txt_url.setVisibility(View.VISIBLE);
+
             holder.txt_url.setText(stepsResponse.getMedia());
             holder.txt_url.setOnClickListener(new View.OnClickListener() {
                 @Override
