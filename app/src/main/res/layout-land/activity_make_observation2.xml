@@ -24,48 +24,54 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_medium"
-                android:text="Main Menu"
+                android:text="Make an observation"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="25sp"></TextView>
 
             <ImageView
-                android:layout_marginLeft="50dp"
                 android:layout_width="60dp"
                 android:layout_height="70dp"
+                android:layout_marginLeft="50dp"
                 android:src="@drawable/logo"
                 app:tint="#FFFFFF" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <TextView
-        android:id="@+id/txt_nodata"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/top_layout"
-        android:padding="10dp"
-        android:text="There is nothing to display"
-        android:textAlignment="center"
-        android:visibility="gone">
-
-    </TextView>
-
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/swiperefresh"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/top_layout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottom_layout"
-        android:layout_below="@+id/top_layout">
+        android:layout_above="@id/bottom_layout"
+        android:layout_below="@+id/top_layout"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/idRVCourses"
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edt_comment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginVertical="20dp"
+            android:background="@drawable/textarea"
+            android:gravity="top"
+            android:hint="Write Text Comments here"
+            android:inputType="textMultiLine"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#BAB6B6" />
 
-            android:nestedScrollingEnabled="false"
-            android:padding="10dp" />
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/colorAccent"
+            android:indeterminateTintMode="src_atop"
+            android:visibility="gone" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/bottom_layout"
@@ -73,34 +79,35 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="15dp">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_make_observation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_style"
-            android:maxLines="1"
-            android:paddingHorizontal="40dp"
-            android:text="Make an Observation"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            app:fontFamily="@font/roboto_medium" />
+        android:orientation="horizontal">
+
 
         <Button
-            android:id="@+id/btn_change_user"
+            android:id="@+id/btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
-            android:background="@drawable/button_style"
+            android:background="#00000000"
+            android:drawableTop="@drawable/back"
             android:fontFamily="@font/roboto_medium"
-            android:text="Change User"
+            android:text="Back"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="16sp"></Button>
-    </androidx.appcompat.widget.LinearLayoutCompat>
 
+
+        <Button
+            android:id="@+id/btn_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:drawableTop="@drawable/forward"
+            android:fontFamily="@font/roboto_medium"
+            android:text="Submit"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"></Button>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 </RelativeLayout>

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.media3.common.MediaItem;
 import androidx.media3.exoplayer.ExoPlayer;
 import androidx.media3.ui.PlayerView;
@@ -81,7 +82,19 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
             player.setMediaItem(mediaItem);
             player.prepare();
 //            player.play();//Set auto play true if require
-
+//            holder.playerView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if (holder.bottom_layout.getVisibility() == View.GONE) {
+//                        holder.bottom_layout.setVisibility(View.VISIBLE);
+//                        holder.txt_description.setVisibility(View.VISIBLE);
+//                    }
+//                    else {
+//                        holder.txt_description.setVisibility(View.GONE);
+//                        holder.bottom_layout.setVisibility(View.GONE);
+//                    }
+//                }
+//            });
 
         }
         holder.btnTextAdd.setOnClickListener(v -> {
@@ -116,10 +129,10 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         // creating variables for our text views.
-        private Button btn_next, btn_back, btn_home,btnTextAdd;
+        private Button btn_next, btn_back, btn_home, btnTextAdd;
         private TextView txt_step_name, txt_description, txt_url;
         private AppCompatImageView img_task_image;
-
+        private LinearLayoutCompat bottom_layout;
         private PlayerView playerView;
 
         public ViewHolder(@NonNull View itemView) {
@@ -134,6 +147,7 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
             img_task_image = itemView.findViewById(R.id.img_task_image);
             playerView = itemView.findViewById(R.id.videoView);
             btnTextAdd = itemView.findViewById(R.id.btnTextAdd);
+            bottom_layout = itemView.findViewById(R.id.bottom_layout);
 
         }
     }

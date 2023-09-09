@@ -32,15 +32,15 @@
         <activity
             android:name="com.utility.app.MakeObservationActivity"
             android:exported="false"
-            android:screenOrientation="nosensor" />
+            android:screenOrientation="sensor" />
         <activity
             android:name="com.utility.app.MakeObservationActivity2"
             android:exported="false"
-            android:screenOrientation="nosensor" />
+            android:screenOrientation="sensor" />
         <activity
             android:name="com.utility.app.StepsDetailsScreenActivity"
             android:exported="false"
-            android:screenOrientation="nosensor" />
+            android:screenOrientation="sensor" />
         <activity
             android:name="com.utility.app.LoginScreenActivity"
             android:exported="true"
@@ -67,11 +67,11 @@ See https://developer.android.com/about/versions/pie/android-9.0-changes-28#apac
         <activity
             android:name="com.utility.app.ProcedureScreenActivity"
             android:exported="true"
-            android:screenOrientation="nosensor" />
+            android:screenOrientation="sensor" />
         <activity
             android:name="com.utility.app.CompleteScreenActivity"
             android:exported="true"
-            android:screenOrientation="nosensor" />
+            android:screenOrientation="sensor" />
     </application>
 
 </manifest>
