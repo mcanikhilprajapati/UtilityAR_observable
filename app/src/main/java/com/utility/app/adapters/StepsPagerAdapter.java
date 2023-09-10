@@ -6,8 +6,12 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
@@ -20,9 +24,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.utility.app.listener.OnViewPagerClickListener;
 import com.utility.app.models.StepsResponse;
+import com.utility.app.models.SurveyResponse;
+import com.utility.app.models.request.SurveyRequest;
+import com.utility.app.retrofit.ApiClient;
 import com.utilityar.app.R;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.ViewHolder> {
@@ -30,6 +41,7 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
     private Context context;
     private ArrayList<StepsResponse> arrayList;
     private OnViewPagerClickListener onViewPagerClickListener;
+    String[] inputType = {"Priority", "Yes", "No", "Na"};
 
     // creating a constructor class.
     public StepsPagerAdapter(Context context, ArrayList<StepsResponse> courseModalArrayList, OnViewPagerClickListener onViewPagerClickListener) {
@@ -124,9 +136,29 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
                 onViewPagerClickListener.onHomeClick(position);
             }
         });
-
+        setupMainmenuSpinner(holder, arrayList.get(position));
     }
 
+    private void setupMainmenuSpinner(ViewHolder holder, StepsResponse stepsResponse) {
+
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, inputType);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        holder.spinnerMenu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position > 0)
+                    submitTask(context, stepsResponse, inputType[position]);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        holder.spinnerMenu.setAdapter(adapter);
+    }
 
     @Override
     public int getItemCount() {
@@ -140,6 +172,7 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
         private AppCompatImageView img_task_image;
         private LinearLayoutCompat bottom_layout;
         private PlayerView playerView;
+        private Spinner spinnerMenu;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -154,7 +187,33 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
             playerView = itemView.findViewById(R.id.videoView);
             btnTextAdd = itemView.findViewById(R.id.btnTextAdd);
             bottom_layout = itemView.findViewById(R.id.bottom_layout);
+            spinnerMenu = itemView.findViewById(R.id.sp_mainmenu);
 
         }
     }
+
+
+    private void submitTask(Context context, StepsResponse stepsResponse, String inputType) {
+
+        SurveyRequest surveyRequest = new SurveyRequest();
+        surveyRequest.setStepId(stepsResponse.getId());
+        surveyRequest.setInputDataType(inputType);
+        ApiClient.createSurvey(context, false, surveyRequest).enqueue(new Callback<SurveyResponse>() {
+            @Override
+            public void onResponse(Call<SurveyResponse> call, Response<SurveyResponse> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(context, "Submitted", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SurveyResponse> call, Throwable t) {
+                Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
+            }
+
+        });
+    }
+
 }

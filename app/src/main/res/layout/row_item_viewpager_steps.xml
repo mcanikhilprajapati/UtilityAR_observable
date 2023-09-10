@@ -42,7 +42,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:scaleType="fitXY"
-                android:background="@color/colorYellow"
                 android:visibility="gone" />
 
             <TextView
@@ -109,15 +108,23 @@
                     android:textAllCaps="false"
                     android:textSize="16sp"></Button>
 
-                <Button
-                    android:layout_width="wrap_content"
+                <Spinner
+                    android:id="@+id/sp_mainmenu"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:background="#00000000"
-                    android:drawableTop="@drawable/yes"
-                    android:fontFamily="@font/roboto_medium"
-                    android:text="Yes"
-                    android:textAllCaps="false"
-                    android:textSize="16sp"></Button>
+                    android:background="@drawable/spinner_cars"
+                    android:overlapAnchor="false"
+                    android:spinnerMode="dropdown" />
+
+                <!--                <Button-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:background="#00000000"-->
+                <!--                    android:drawableTop="@drawable/yes"-->
+                <!--                    android:fontFamily="@font/roboto_medium"-->
+                <!--                    android:text="Yes"-->
+                <!--                    android:textAllCaps="false"-->
+                <!--                    android:textSize="16sp"></Button>-->
 
                 <Button
                     android:layout_width="wrap_content"

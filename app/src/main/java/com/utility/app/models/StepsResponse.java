@@ -35,9 +35,27 @@ public class StepsResponse implements Parcelable {
     @SerializedName("createdAt")
     @Expose
     private String createdAt;
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
+
+    @SerializedName("priority")
+    @Expose
+    private String priority;
+
     @SerializedName("updatedAt")
     @Expose
     private String updatedAt;
+
+
+    public StepsResponse() {
+
+    }
 
     protected StepsResponse(Parcel in) {
         id = in.readString();
@@ -151,5 +169,10 @@ public class StepsResponse implements Parcelable {
         dest.writeString(procedureId);
         dest.writeString(createdAt);
         dest.writeString(updatedAt);
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

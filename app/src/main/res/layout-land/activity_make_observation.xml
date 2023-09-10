@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    tools:context="com.utility.app.LoginScreenActivity">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_medium"
+            android:text="Make an observation"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp"></TextView>
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="55dp"
+            android:layout_marginLeft="50dp"
+            android:src="@drawable/logo"
+            app:tint="#FFFFFF" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_layout"
+        android:layout_below="@+id/top_layout"
+        android:padding="10dp">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edt_comment"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="#CDCDCD"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.4"
+                android:background="@drawable/textarea"
+                android:gravity="top"
+                android:hint="Text Comments"
+                android:inputType="textMultiLine" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="10dp"
+                android:layout_weight="0.6">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:orientation="vertical">
+
+                    <Spinner
+                        android:id="@+id/sp_mainmenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/spinner_land"
+                        android:overlapAnchor="false"
+                        android:spinnerMode="dropdown"
+                        android:visibility="visible" />
+
+                    <Spinner
+                        android:id="@+id/sp_procedure"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/spinner_land"
+                        android:overlapAnchor="false"
+                        android:spinnerMode="dropdown"
+                        android:visibility="gone" />
+
+                    <Spinner
+                        android:id="@+id/sp_steps"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+
+                        android:background="@drawable/spinner_land"
+                        android:overlapAnchor="false"
+                        android:spinnerMode="dropdown"
+                        android:visibility="gone" />
+
+                    <Spinner
+                        android:id="@+id/sp_priority"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+
+                        android:background="@drawable/spinner_land"
+                        android:overlapAnchor="false"
+                        android:spinnerMode="dropdown" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </ScrollView>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </RelativeLayout>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+
+        <Button
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:drawableTop="@drawable/back"
+            android:fontFamily="@font/roboto_medium"
+            android:text="Back"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"></Button>
+
+        <Button
+            android:id="@+id/btn_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:drawableTop="@drawable/camera"
+            android:fontFamily="@font/roboto_medium"
+            android:text="Camera"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"></Button>
+
+
+        <Button
+            android:id="@+id/btn_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:drawableTop="@drawable/forward"
+            android:fontFamily="@font/roboto_medium"
+            android:text="Submit"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"></Button>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</RelativeLayout>

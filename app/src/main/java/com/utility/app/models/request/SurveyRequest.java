@@ -8,19 +8,56 @@ public class SurveyRequest {
 
     @SerializedName("text")
     @Expose
-    private String text="";
+    private String text = "";
     @SerializedName("media")
     @Expose
-    private String media="";
+    private String media = "";
     @SerializedName("mediaType")
     @Expose
-    private String mediaType="";
+    private String mediaType = "";
     @SerializedName("inputDataType")
     @Expose
-    private String inputDataType="";
+    private String inputDataType = "";
+
     @SerializedName("stepId")
     @Expose
-    private String stepId;
+    private String stepId= "";
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
+
+    @SerializedName("priority")
+    @Expose
+    private String priority = "";
+
+    public String getMenuId() {
+        return menuId;
+    }
+
+    public void setMenuId(String menuId) {
+        this.menuId = menuId;
+    }
+
+    public String getProcedureId() {
+        return procedureId;
+    }
+
+    public void setProcedureId(String procedureId) {
+        this.procedureId = procedureId;
+    }
+
+    @SerializedName("menuId")
+    @Expose
+    private String menuId = "";
+
+    @SerializedName("procedureId")
+    @Expose
+    private String procedureId = "";
 
     public String getText() {
         return text;
