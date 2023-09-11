@@ -22,7 +22,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MakeObservationActivity2 extends AppCompatActivity {
+public class MakeObservationActivity2 extends BaseActivity {
     private Button btn_next, btn_back;
     private AppCompatEditText edt_comment;
     String stepID = "";

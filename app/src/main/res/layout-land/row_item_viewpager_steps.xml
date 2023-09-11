@@ -173,7 +173,7 @@
                         android:id="@+id/sp_mainmenu"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/spinner_cars"
+                        android:background="@drawable/spinner_land"
                         android:overlapAnchor="false"
                         android:spinnerMode="dropdown" />
 

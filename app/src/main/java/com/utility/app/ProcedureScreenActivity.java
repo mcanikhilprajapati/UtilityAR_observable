@@ -27,7 +27,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class ProcedureScreenActivity extends AppCompatActivity {
+public class ProcedureScreenActivity extends BaseActivity {
 
 
     private ArrayList<ProcedureResponse> procedureList = new ArrayList<>();

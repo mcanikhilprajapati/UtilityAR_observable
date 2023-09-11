@@ -27,7 +27,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class StepsDetailsScreenActivity extends AppCompatActivity implements OnViewPagerClickListener {
+public class StepsDetailsScreenActivity extends BaseActivity implements OnViewPagerClickListener {
     //    private Button btn_next, btn_back;
     String procedureID = "";
     private ArrayList<StepsResponse> stepsList = new ArrayList<>();

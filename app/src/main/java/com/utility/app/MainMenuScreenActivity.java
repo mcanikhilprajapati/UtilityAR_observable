@@ -29,7 +29,7 @@ import retrofit2.Response;
 
 //TODO https://www.digitalocean.com/community/tutorials/android-recyclerview-load-more-endless-scrolling
 
-public class MainMenuScreenActivity extends AppCompatActivity {
+public class MainMenuScreenActivity extends BaseActivity {
 
 
     Uri imageUri = null;
@@ -90,7 +90,9 @@ public class MainMenuScreenActivity extends AppCompatActivity {
             public void onClick(View v) {
                 SessionManager.getInstance().logout();
                 Intent intent = new Intent(getApplicationContext(), LoginScreenActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                finish();
             }
         });
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);

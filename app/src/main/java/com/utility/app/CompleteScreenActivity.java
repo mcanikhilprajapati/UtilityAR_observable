@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.utilityar.app.R;
 
-public class CompleteScreenActivity extends AppCompatActivity {
+public class CompleteScreenActivity extends BaseActivity {
     private Button btn_next, btn_back;
 
     @Override

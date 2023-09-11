@@ -10,8 +10,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottom_layout"
-        >
+        android:layout_above="@+id/bottom_layout">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -52,6 +51,14 @@
                     android:hint="Text Comments"
                     android:inputType="textMultiLine" />
 
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/camera_image"
+                    android:visibility="gone"
+                    android:src="@drawable/vdo"
+                    android:scaleType="fitCenter"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"></androidx.appcompat.widget.AppCompatImageView>
+
                 <Spinner
                     android:id="@+id/sp_mainmenu"
                     android:layout_width="match_parent"
@@ -90,11 +97,21 @@
                     android:background="@drawable/spinner_cars"
                     android:overlapAnchor="false"
                     android:spinnerMode="dropdown" />
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:indeterminate="true"
+                    android:indeterminateTint="@color/colorAccent"
+                    android:indeterminateTintMode="src_atop"
+                    android:visibility="gone" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
 
         </RelativeLayout>
     </ScrollView>
+
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/bottom_layout"
         android:layout_width="match_parent"

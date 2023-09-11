@@ -10,15 +10,14 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        android:layout_centerInParent="true"
-        android:gravity="center"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/main_container"
-            android:layout_width="wrap_content"
+
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="150dp"
             android:gravity="center"
             android:orientation="vertical"
             android:visibility="visible">
@@ -90,18 +89,18 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="10dp"
-            android:indeterminate="true"
-            android:indeterminateTint="@color/colorYellow"
-            android:indeterminateTintMode="src_atop"
-            android:visibility="gone" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="10dp"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/colorYellow"
+        android:indeterminateTintMode="src_atop"
+        android:visibility="gone" />
 </RelativeLayout>

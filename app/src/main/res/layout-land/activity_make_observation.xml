@@ -66,10 +66,18 @@
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-
                     android:orientation="vertical">
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/camera_image"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:src="@drawable/vdo"
+                        android:scaleType="fitCenter"
+                        android:layout_marginBottom="10dp"
+                        android:layout_height="150dp"></androidx.appcompat.widget.AppCompatImageView>
 
                     <Spinner
+
                         android:id="@+id/sp_mainmenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -77,7 +85,7 @@
                         android:background="@drawable/spinner_land"
                         android:overlapAnchor="false"
                         android:spinnerMode="dropdown"
-                        android:visibility="visible" />
+                        android:visibility="gone" />
 
                     <Spinner
                         android:id="@+id/sp_procedure"
@@ -109,6 +117,7 @@
                         android:background="@drawable/spinner_land"
                         android:overlapAnchor="false"
                         android:spinnerMode="dropdown" />
+
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </ScrollView>
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -160,5 +169,14 @@
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="16sp"></Button>
+        <ProgressBar
+            android:layout_gravity="center"
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/colorYellow"
+            android:indeterminateTintMode="src_atop"
+            android:visibility="gone" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 </RelativeLayout>

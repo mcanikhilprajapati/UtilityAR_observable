@@ -9,8 +9,11 @@ import static com.utility.app.SessionManager.JWT;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -33,7 +36,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginScreenActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginScreenActivity extends BaseActivity implements View.OnClickListener {
     AppCompatButton btnLogin,btnHeadsetMode;
     AppCompatEditText edtUsername, edtPassword;
     ProgressBar progressBar;
@@ -73,6 +76,7 @@ public class LoginScreenActivity extends AppCompatActivity implements View.OnCli
         edtUsername = findViewById(R.id.edt_username);
 
         btnLogin.setOnClickListener(this);
+        btnHeadsetMode.setOnClickListener(this);
     }
 
     @Override
@@ -83,6 +87,17 @@ public class LoginScreenActivity extends AppCompatActivity implements View.OnCli
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                     doLogin();
+                }
+                break;
+            case R.id.btn_headset_mode:
+                int orientation = getApplicationContext().getResources().getConfiguration().orientation;
+                switch(orientation) {
+                    case Configuration.ORIENTATION_PORTRAIT:
+                        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                        break;
+                    case Configuration.ORIENTATION_LANDSCAPE:
+                        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                        break;
                 }
                 break;
 
