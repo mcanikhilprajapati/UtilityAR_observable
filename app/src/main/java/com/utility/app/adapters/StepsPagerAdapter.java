@@ -1,19 +1,29 @@
 package com.utility.app.adapters;
 
+import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.media3.common.MediaItem;
@@ -22,6 +32,7 @@ import androidx.media3.ui.PlayerView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.utility.app.Constant;
 import com.utility.app.listener.OnViewPagerClickListener;
 import com.utility.app.models.StepsResponse;
 import com.utility.app.models.SurveyResponse;
@@ -29,7 +40,9 @@ import com.utility.app.models.request.SurveyRequest;
 import com.utility.app.retrofit.ApiClient;
 import com.utilityar.app.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,8 +54,8 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
     private Context context;
     private ArrayList<StepsResponse> arrayList;
     private OnViewPagerClickListener onViewPagerClickListener;
-    String[] inputType = {"Priority", "Yes", "No", "Na"};
 
+    Uri fileURI;
     // creating a constructor class.
     public StepsPagerAdapter(Context context, ArrayList<StepsResponse> courseModalArrayList, OnViewPagerClickListener onViewPagerClickListener) {
         this.context = context;
@@ -136,29 +149,33 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
                 onViewPagerClickListener.onHomeClick(position);
             }
         });
-        setupMainmenuSpinner(holder, arrayList.get(position));
-    }
 
-    private void setupMainmenuSpinner(ViewHolder holder, StepsResponse stepsResponse) {
 
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, inputType);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        holder.btn_camera.setOnClickListener(v -> {
+            onViewPagerClickListener.onTakePictureClick(position);
+        });
 
-        holder.spinnerMenu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        holder.btn_input_type.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position > 0)
-                    submitTask(context, stepsResponse, inputType[position]);
-            }
+            public void onClick(View v) {
+                PopupMenu popupMenu = new PopupMenu(context, v);
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+                // Inflating popup menu from popup_menu.xml file
+                popupMenu.getMenuInflater().inflate(R.menu.poup_menu, popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        submitTask(context,stepsResponse,menuItem.getTitle().toString());
+                        return true;
+                    }
+                });
+                // Showing the popup menu
+                popupMenu.show();
             }
         });
-        holder.spinnerMenu.setAdapter(adapter);
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -167,7 +184,7 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         // creating variables for our text views.
-        private Button btn_next, btn_back, btn_home, btnTextAdd;
+        private Button btn_next, btn_back, btn_home, btnTextAdd,btn_camera,btn_input_type;
         private TextView txt_step_name, txt_description, txt_url;
         private AppCompatImageView img_task_image;
         private LinearLayoutCompat bottom_layout;
@@ -188,6 +205,8 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
             btnTextAdd = itemView.findViewById(R.id.btnTextAdd);
             bottom_layout = itemView.findViewById(R.id.bottom_layout);
             spinnerMenu = itemView.findViewById(R.id.sp_mainmenu);
+            btn_camera = itemView.findViewById(R.id.btn_camera);
+            btn_input_type = itemView.findViewById(R.id.btn_input_type);
 
         }
     }
@@ -214,6 +233,10 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
             }
 
         });
+
     }
+
+
+
 
 }

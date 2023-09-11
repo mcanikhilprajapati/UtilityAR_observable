@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -60,6 +59,9 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
     private String selectMediaType = Constant.IMAGE;
     private AppCompatImageView cameraImage;
     private ProgressBar progressBar;
+    private boolean isFromSteps = false;
+    private boolean hasImageSupport = false;
+    String stepID = "";
     ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -86,6 +88,13 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_observation);
+
+        Intent myIntent = getIntent();
+        stepID = myIntent.getStringExtra(Constant.stepID);
+        isFromSteps = myIntent.getBooleanExtra(Constant.SCREEN_FROM_STEPS, false);
+        hasImageSupport = myIntent.getBooleanExtra(Constant.SCREEN_FROM_STEPS_CAMERA, false);
+
+
         progressBar = findViewById(R.id.progressBar);
         btn_camera = findViewById(R.id.btn_camera);
         btn_next = findViewById(R.id.btn_next);
@@ -96,38 +105,40 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
         edt_comment = findViewById(R.id.edt_comment);
         cameraImage = findViewById(R.id.camera_image);
         btn_next.setOnClickListener(v -> {
-            if (!TextUtils.isEmpty(edt_comment.getText().toString())) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(MakeObservationActivity.this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar));
-                builder.setTitle("Confirm !").setMessage("Are sure you want to submit task details now?")
-                        .setCancelable(false)
-                        .setPositiveButton("Yes", (dialog, id) -> {
-                            if (fileURI != null) {
-                                progressBar.setVisibility(View.VISIBLE);
-                                btn_next.setEnabled(false);
-                                UploadImageAsyncTask uploadImageAsyncTask = new UploadImageAsyncTask(getApplicationContext(), this);
-                                uploadImageAsyncTask.execute(fileURI);
-                            } else {
-                                submitTask();
-                            }
-                        }).setNegativeButton("No", (dialog, which) -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(MakeObservationActivity.this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar));
+            builder.setTitle("Confirm !").setMessage("Are sure you want to submit task details now?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", (dialog, id) -> {
+                        if (fileURI != null) {
+                            progressBar.setVisibility(View.VISIBLE);
+                            btn_next.setEnabled(false);
+                            UploadImageAsyncTask uploadImageAsyncTask = new UploadImageAsyncTask(getApplicationContext(), this);
+                            uploadImageAsyncTask.execute(fileURI);
+                        } else {
+                            submitTask();
+                        }
+                    }).setNegativeButton("No", (dialog, which) -> {
 
-                        });
-                AlertDialog alert = builder.create();
-                alert.show();
-            } else {
-                edt_comment.setError("Please add Comment before submit");
-            }
-
-//            Intent intent = new Intent(getApplicationContext(), CompleteScreenActivity.class);
-//            startActivity(intent);
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
         });
         btn_back.setOnClickListener(v -> {
             finish();
         });
         setupPrioritySpinner();
-
-        getMainMenuList();
-
+        if (!isFromSteps) {
+            getMainMenuList();
+        } else {
+            spPriority.setVisibility(View.GONE);
+            if (!hasImageSupport) {
+                edt_comment.setVisibility(View.VISIBLE);
+                btn_camera.setVisibility(View.GONE);
+            }else {
+                edt_comment.setVisibility(View.GONE);
+                btn_camera.setVisibility(View.VISIBLE);
+            }
+        }
         // You can do the assignment inside onAttach or onCreate, i.e, before the activity is displayed
 
 
@@ -141,17 +152,14 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
                             takePictureFromCamera();
                         }).setNegativeButton("Cancel", (dialog, which) -> {
 
-                        }).setNeutralButton("Video", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                selectMediaType = Constant.VIDEO;
-                                takeVideoFromCamera();
-                            }
+                        }).setNeutralButton("Video", (dialog, which) -> {
+                            selectMediaType = Constant.VIDEO;
+                            takeVideoFromCamera();
                         });
                 AlertDialog alert = builder.create();
                 alert.show();
 
-            }else {
+            } else {
                 getAllPermissions();
             }
 
@@ -386,6 +394,11 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
         if (spSteps.getSelectedItemPosition() > 0) {
             surveyRequest.setStepId(stepsList.get(spSteps.getSelectedItemPosition()).getId());
         }
+
+        if (isFromSteps) {
+            surveyRequest.setStepId(stepID);
+        }
+
         if (spPriority.getSelectedItemPosition() > 0) {
             surveyRequest.setPriority(priority[spPriority.getSelectedItemPosition()]);
         }

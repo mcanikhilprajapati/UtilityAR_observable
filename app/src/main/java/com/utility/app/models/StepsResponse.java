@@ -1,6 +1,7 @@
 
 package com.utility.app.models;
 
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -36,6 +37,15 @@ public class StepsResponse implements Parcelable {
     @Expose
     private String createdAt;
 
+    public Uri getFileURI() {
+        return fileURI;
+    }
+
+    public void setFileURI(Uri fileURI) {
+        this.fileURI = fileURI;
+    }
+
+    private Uri fileURI;
     public String getPriority() {
         return priority;
     }

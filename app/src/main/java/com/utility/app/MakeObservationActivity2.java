@@ -40,21 +40,18 @@ public class MakeObservationActivity2 extends BaseActivity {
         btn_next = findViewById(R.id.btn_next);
         btn_back = findViewById(R.id.btn_back);
         edt_comment = findViewById(R.id.edt_comment);
-        btn_next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!TextUtils.isEmpty(edt_comment.getText().toString())) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(MakeObservationActivity2.this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar));
-                    builder.setTitle("Confirm !").setMessage("Are sure you want to submit task details now?")
-                            .setCancelable(false)
-                            .setPositiveButton("Yes", (dialog, id) -> submitTask()).setNegativeButton("No", (dialog, which) -> {
+        btn_next.setOnClickListener(v -> {
+            if (!TextUtils.isEmpty(edt_comment.getText().toString())) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(MakeObservationActivity2.this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar));
+                builder.setTitle("Confirm !").setMessage("Are sure you want to submit task details now?")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", (dialog, id) -> submitTask()).setNegativeButton("No", (dialog, which) -> {
 
-                            });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                } else {
-                    edt_comment.setError("Please add Comment before submit");
-                }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+            } else {
+                edt_comment.setError("Please add Comment before submit");
             }
         });
         btn_back.setOnClickListener(v -> finish());
