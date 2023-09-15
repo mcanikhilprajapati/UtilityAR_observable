@@ -17,15 +17,15 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_toolbar_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_medium"
             android:text="Main Menu"
             android:textAlignment="center"
             android:textColor="#000"
-            android:textSize="25sp"></TextView>
-
+            android:textSize="25sp"/>
         <ImageView
             android:layout_width="120dp"
             android:layout_height="150dp"
@@ -79,12 +79,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/button_style"
+            android:background="@drawable/button_styleborder_black"
             android:maxLines="1"
             android:paddingHorizontal="40dp"
             android:text="Make an Observation"
             android:textAllCaps="false"
-            android:textColor="#FFFFFF"
+            android:textColor="#000000"
             android:textSize="18sp"
             app:fontFamily="@font/roboto_medium" />
 

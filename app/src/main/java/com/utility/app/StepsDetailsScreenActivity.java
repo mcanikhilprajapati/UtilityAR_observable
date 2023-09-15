@@ -44,7 +44,7 @@ public class StepsDetailsScreenActivity extends BaseActivity implements OnViewPa
         viewPager = findViewById(R.id.viewPager);
         pagerAdapter = new StepsPagerAdapter(getApplicationContext(), stepsList, this);
         viewPager.setAdapter(pagerAdapter);
-//        viewPager.setUserInputEnabled(false);
+        viewPager.setUserInputEnabled(false);
 
     }
 
@@ -112,7 +112,7 @@ public class StepsDetailsScreenActivity extends BaseActivity implements OnViewPa
     public void onTextButtonClick(int position) {
         Intent intent = new Intent(StepsDetailsScreenActivity.this, MakeObservationActivity.class);
         intent.putExtra(Constant.stepID, stepsList.get(position).getId());
-        intent.putExtra(Constant.SCREEN_FROM_STEPS, true);
+//        intent.putExtra(Constant.SCREEN_FROM_STEPS, true);
         startActivity(intent);
     }
 
@@ -120,8 +120,8 @@ public class StepsDetailsScreenActivity extends BaseActivity implements OnViewPa
     public void onTakePictureClick(int position) {
         Intent intent = new Intent(StepsDetailsScreenActivity.this, MakeObservationActivity.class);
         intent.putExtra(Constant.stepID, stepsList.get(position).getId());
-        intent.putExtra(Constant.SCREEN_FROM_STEPS, true);
-        intent.putExtra(Constant.SCREEN_FROM_STEPS_CAMERA, true);
+//        intent.putExtra(Constant.SCREEN_FROM_STEPS, true);
+//        intent.putExtra(Constant.SCREEN_FROM_STEPS_CAMERA, true);
         startActivity(intent);
     }
 

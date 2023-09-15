@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -39,7 +40,6 @@ public class MainMenuScreenActivity extends BaseActivity {
     private Button btn_make_observation, btnChangeUser;
     private TextView txtNodata;
     private SwipeRefreshLayout swipeRefreshLayout;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +72,8 @@ public class MainMenuScreenActivity extends BaseActivity {
 
     private void initUI() {
         // initializing our variables.
+        AppCompatTextView toolbarTitle = findViewById(R.id.txt_toolbar_title);
+        toolbarTitle.setText("Main Menu");
         btnChangeUser = findViewById(R.id.btn_change_user);
         btn_make_observation = findViewById(R.id.btn_make_observation);
         courseRV = findViewById(R.id.idRVCourses);
@@ -113,8 +115,10 @@ public class MainMenuScreenActivity extends BaseActivity {
                     ArrayList<MainMenuResponse> mainMenuResponses = response.body();
                     if (mainMenuResponses.size() > 0) {
                         mainmenuList.addAll(mainMenuResponses);
+                        swipeRefreshLayout.setVisibility(View.VISIBLE);
                         mainmenuAdapter.notifyDataSetChanged();
                         txtNodata.setVisibility(View.GONE);
+
                     } else {
                         txtNodata.setVisibility(View.VISIBLE);
                         courseRV.setVisibility(View.VISIBLE);

@@ -7,47 +7,20 @@
     android:background="#000000"
     tools:context="com.utility.app.LoginScreenActivity">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <include
         android:id="@+id/top_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:gravity="center">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_medium"
-                android:text="Main Menu"
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textSize="25sp"></TextView>
-
-            <ImageView
-                android:layout_marginLeft="50dp"
-                android:layout_width="50dp"
-                android:layout_height="55dp"
-                android:src="@drawable/logo"
-                app:tint="#FFFFFF" />
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
+        layout="@layout/toolbar" />
 
     <TextView
         android:id="@+id/txt_nodata"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/top_layout"
+        android:layout_centerInParent="true"
         android:padding="10dp"
         android:text="There is nothing to display"
         android:textAlignment="center"
-        android:visibility="gone">
+        android:textColor="@color/colorWhite"
+        android:visibility="visible">
 
     </TextView>
 
@@ -56,14 +29,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/bottom_layout"
-        android:layout_below="@+id/top_layout">
+        android:layout_below="@+id/top_layout"
+        android:visibility="gone">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:background="#FFFFFF"
             android:id="@+id/idRVCourses"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
+            android:background="#FFFFFF"
             android:nestedScrollingEnabled="false"
             android:padding="10dp" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

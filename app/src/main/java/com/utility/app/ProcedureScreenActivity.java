@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -69,6 +70,9 @@ public class ProcedureScreenActivity extends BaseActivity {
     }
 
     private void initUI() {
+        AppCompatTextView toolbarTitle = findViewById(R.id.txt_toolbar_title);
+        toolbarTitle.setText("Procedures / Data Menu");
+
         // initializing our variables.
         btnBack = findViewById(R.id.btn_back);
         rvProcedure = findViewById(R.id.idRVCourses);
