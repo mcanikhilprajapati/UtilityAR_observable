@@ -3,6 +3,8 @@ package com.utility.app;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -27,6 +29,8 @@ public class StepsDetailsScreenActivity extends BaseActivity implements OnViewPa
     ProgressBar progressBar;
     private ViewPager2 viewPager;
     private StepsPagerAdapter pagerAdapter;
+    private LinearLayout txt_nodata;
+    private Button btn_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +44,33 @@ public class StepsDetailsScreenActivity extends BaseActivity implements OnViewPa
 
 
     private void initUI() {
+        btn_back = findViewById(R.id.btn_back);
+        txt_nodata = findViewById(R.id.txt_nodata);
         progressBar = findViewById(R.id.progressBar);
+        btn_back.setOnClickListener(v -> {
+            finish();
+        });
+
         viewPager = findViewById(R.id.viewPager);
         pagerAdapter = new StepsPagerAdapter(getApplicationContext(), stepsList, this);
         viewPager.setAdapter(pagerAdapter);
         viewPager.setUserInputEnabled(false);
+        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+            }
 
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                super.onPageScrollStateChanged(state);
+            }
+        });
     }
 
     private void getStespList() {
@@ -62,9 +87,12 @@ public class StepsDetailsScreenActivity extends BaseActivity implements OnViewPa
                     if (mainMenuResponses.size() > 0) {
                         stepsList.addAll(mainMenuResponses);
                         pagerAdapter.notifyDataSetChanged();
+                        txt_nodata.setVisibility(View.GONE);
                     } else {
+                        txt_nodata.setVisibility(View.VISIBLE);
                     }
                 } else {
+                    txt_nodata.setVisibility(View.VISIBLE);
                     Toast.makeText(StepsDetailsScreenActivity.this, "Fail", Toast.LENGTH_SHORT).show();
                 }
 

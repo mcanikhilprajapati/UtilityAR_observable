@@ -1,28 +1,29 @@
 package com.utility.app.adapters;
 
 import android.content.Context;
-import android.net.Uri;
+import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.PopupMenu;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
-import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.media3.common.MediaItem;
 import androidx.media3.exoplayer.ExoPlayer;
 import androidx.media3.ui.PlayerView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.utility.app.listener.OnViewPagerClickListener;
 import com.utility.app.models.StepsResponse;
 import com.utility.app.models.SurveyResponse;
@@ -42,14 +43,14 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
     private Context context;
     private ArrayList<StepsResponse> arrayList;
     private OnViewPagerClickListener onViewPagerClickListener;
+    ExoPlayer player;
 
-    Uri fileURI;
-
-    // creating a constructor class.
     public StepsPagerAdapter(Context context, ArrayList<StepsResponse> courseModalArrayList, OnViewPagerClickListener onViewPagerClickListener) {
         this.context = context;
         this.arrayList = courseModalArrayList;
         this.onViewPagerClickListener = onViewPagerClickListener;
+        player = new ExoPlayer.Builder(context).build();
+
     }
 
     @NonNull
@@ -70,57 +71,55 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
         holder.img_task_image.setVisibility(View.GONE);
         holder.webview.setVisibility(View.GONE);
         holder.playerView.setVisibility(View.GONE);
-
+        holder.txt_description.setVisibility(View.VISIBLE);
+        Log.d("XXXXX", "75");
 
         if (stepsResponse.getMediaType().equals("URL")) {
-            holder.txt_description.setVisibility(View.GONE);
+//            holder.txt_description.setVisibility(View.GONE);
 //            holder.bottom_layout.setVisibility(View.GONE);
             holder.webview.setVisibility(View.VISIBLE);
             WebSettings webSettings = holder.webview.getSettings();
             webSettings.setJavaScriptEnabled(true);
             webSettings.setBuiltInZoomControls(true);
             holder.webview.loadUrl(stepsResponse.getMedia());
-//            holder.txt_url.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    try {
-//                        Intent i = new Intent(Intent.ACTION_VIEW);
-//                        i.setData(Uri.parse(stepsResponse.getMedia()));
-//                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                        context.startActivity(i);
-//                    } catch (Exception e) {
-//                    }
-//                }
-//            });
         }
         if (stepsResponse.getMediaType().equals("IMAGE")) {
             holder.img_task_image.setVisibility(View.VISIBLE);
-            Glide.with(context).load(stepsResponse.getMedia()).into(holder.img_task_image);
+//            Glide.with(context).load(stepsResponse.getMedia()).into(holder.img_task_image);
+
+            Glide.with(context)
+                    .asBitmap()      //get hieght and width
+                    .load(stepsResponse.getMedia())
+                    .into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(@NonNull Bitmap thumbnail, @Nullable
+                        Transition<? super Bitmap> transition) {
+
+                            try {
+                                int height = holder.img_task_image.getLayoutParams().height;
+                                int newWidth = (height * thumbnail.getWidth()) / thumbnail.getHeight();
+
+                                holder.img_task_image.getLayoutParams().width = newWidth;
+                                holder.img_task_image.getLayoutParams().height = height;
+                                holder.img_task_image.setImageBitmap(thumbnail);
+                            } catch (Exception exception) {
+                            }
+                        }
+                    });
         }
         if (stepsResponse.getMediaType().equals("VIDEO")) {
             holder.playerView.setVisibility(View.VISIBLE);
             holder.playerView.setFocusable(true);
-            ExoPlayer player = new ExoPlayer.Builder(context).build();
+
             holder.playerView.setPlayer(player);
-            holder.playerView.setUseController(false);
+            holder.playerView.setUseController(true);
             MediaItem mediaItem = MediaItem.fromUri(stepsResponse.getMedia());
             player.setMediaItem(mediaItem);
             player.prepare();
-//            player.play();//Set auto play true if require
-//            holder.playerView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    if (holder.bottom_layout.getVisibility() == View.GONE) {
-//                        holder.bottom_layout.setVisibility(View.VISIBLE);
-//                        holder.txt_description.setVisibility(View.VISIBLE);
-//                    }
-//                    else {
-//                        holder.txt_description.setVisibility(View.GONE);
-//                        holder.bottom_layout.setVisibility(View.GONE);
-//                    }
-//                }
-//            });
-
+            player.play();
+//            startPlayer();
+        } else {
+//            pausePlayer();
         }
         holder.btnTextAdd.setOnClickListener(v -> {
             if (onViewPagerClickListener != null) {
@@ -149,23 +148,14 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
             onViewPagerClickListener.onTakePictureClick(position);
         });
 
-        holder.btn_input_type.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PopupMenu popupMenu = new PopupMenu(context, v);
-
-                // Inflating popup menu from popup_menu.xml file
-                popupMenu.getMenuInflater().inflate(R.menu.poup_menu, popupMenu.getMenu());
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem menuItem) {
-                        submitTask(context, stepsResponse, menuItem.getTitle().toString());
-                        return true;
-                    }
-                });
-                // Showing the popup menu
-                popupMenu.show();
-            }
+        holder.btn_input_type.setOnClickListener(v -> {
+            PopupMenu popupMenu = new PopupMenu(context, v);
+            popupMenu.getMenuInflater().inflate(R.menu.poup_menu, popupMenu.getMenu());
+            popupMenu.setOnMenuItemClickListener(menuItem -> {
+                submitTask(context, stepsResponse, menuItem.getTitle().toString());
+                return true;
+            });
+            popupMenu.show();
         });
     }
 
@@ -176,13 +166,10 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        // creating variables for our text views.
         private Button btn_next, btn_back, btn_home, btnTextAdd, btn_camera, btn_input_type;
         private TextView txt_step_name, txt_description;
         private AppCompatImageView img_task_image;
-        private LinearLayoutCompat bottom_layout;
         private PlayerView playerView;
-        private Spinner spinnerMenu;
         private WebView webview;
 
         public ViewHolder(@NonNull View itemView) {
@@ -196,8 +183,6 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
             img_task_image = itemView.findViewById(R.id.img_task_image);
             playerView = itemView.findViewById(R.id.videoView);
             btnTextAdd = itemView.findViewById(R.id.btnTextAdd);
-            bottom_layout = itemView.findViewById(R.id.bottom_layout);
-            spinnerMenu = itemView.findViewById(R.id.sp_mainmenu);
             btn_camera = itemView.findViewById(R.id.btn_camera);
             btn_input_type = itemView.findViewById(R.id.btn_input_type);
             webview = itemView.findViewById(R.id.webview);
@@ -230,5 +215,14 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
 
     }
 
+    private void pausePlayer() {
+        player.setPlayWhenReady(false);
+        player.getPlaybackState();
+    }
+
+    private void startPlayer() {
+        player.setPlayWhenReady(true);
+        player.getPlaybackState();
+    }
 
 }
