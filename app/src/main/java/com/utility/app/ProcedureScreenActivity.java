@@ -55,6 +55,7 @@ public class ProcedureScreenActivity extends BaseActivity {
             public void onItemClick(int position) {
                 Intent intent = new Intent(getApplicationContext(), StepsDetailsScreenActivity.class);
                 intent.putExtra(Constant.procedureID,procedureList.get(position).getId());
+                intent.putExtra(Constant.menuID,menuID);
                 startActivity(intent);
             }
 

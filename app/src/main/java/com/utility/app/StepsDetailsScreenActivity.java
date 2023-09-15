@@ -25,6 +25,7 @@ import retrofit2.Response;
 public class StepsDetailsScreenActivity extends BaseActivity implements OnViewPagerClickListener {
     //    private Button btn_next, btn_back;
     String procedureID = "";
+    String menuID = "";
     private ArrayList<StepsResponse> stepsList = new ArrayList<>();
     ProgressBar progressBar;
     private ViewPager2 viewPager;
@@ -38,6 +39,7 @@ public class StepsDetailsScreenActivity extends BaseActivity implements OnViewPa
         setContentView(R.layout.activity_steps_details_screen);
         Intent myIntent = getIntent();
         procedureID = myIntent.getStringExtra(Constant.procedureID);
+        menuID = myIntent.getStringExtra(Constant.menuID);
         initUI();
         getStespList();
     }
@@ -140,6 +142,8 @@ public class StepsDetailsScreenActivity extends BaseActivity implements OnViewPa
     public void onTextButtonClick(int position) {
         Intent intent = new Intent(StepsDetailsScreenActivity.this, MakeObservationActivity.class);
         intent.putExtra(Constant.stepID, stepsList.get(position).getId());
+        intent.putExtra(Constant.menuID,menuID);
+        intent.putExtra(Constant.procedureID,procedureID);
 //        intent.putExtra(Constant.SCREEN_FROM_STEPS, true);
         startActivity(intent);
     }
@@ -148,6 +152,9 @@ public class StepsDetailsScreenActivity extends BaseActivity implements OnViewPa
     public void onTakePictureClick(int position) {
         Intent intent = new Intent(StepsDetailsScreenActivity.this, MakeObservationActivity.class);
         intent.putExtra(Constant.stepID, stepsList.get(position).getId());
+        intent.putExtra(Constant.menuID,menuID);
+        intent.putExtra(Constant.procedureID,procedureID);
+
 //        intent.putExtra(Constant.SCREEN_FROM_STEPS, true);
 //        intent.putExtra(Constant.SCREEN_FROM_STEPS_CAMERA, true);
         startActivity(intent);

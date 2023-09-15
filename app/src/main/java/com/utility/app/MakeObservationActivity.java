@@ -53,15 +53,22 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
     private ArrayList<MainMenuResponse> mainmenuList = new ArrayList<>();
     private ArrayList<ProcedureResponse> procedureList = new ArrayList<>();
     private ArrayList<StepsResponse> stepsList = new ArrayList<>();
+
+    ArrayAdapter<MainMenuResponse> adapterMainmenu;
+    ArrayAdapter<ProcedureResponse> adapterProcedure;
+    ArrayAdapter<StepsResponse> adapterSteps;
+
     private AppCompatEditText edt_comment;
     private Uri fileURI;
     private String selectedMedia;
     private String selectMediaType = Constant.IMAGE;
     private AppCompatImageView cameraImage;
     private ProgressBar progressBar;
-    private boolean isFromSteps = false;
-    private boolean hasImageSupport = false;
+
+
     String stepID = "";
+    String procedureID = "";
+    String menuID = "";
     ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -91,9 +98,8 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
 
         Intent myIntent = getIntent();
         stepID = myIntent.getStringExtra(Constant.stepID);
-        isFromSteps = myIntent.getBooleanExtra(Constant.SCREEN_FROM_STEPS, false);
-        hasImageSupport = myIntent.getBooleanExtra(Constant.SCREEN_FROM_STEPS_CAMERA, false);
-
+        procedureID = myIntent.getStringExtra(Constant.procedureID);
+        menuID = myIntent.getStringExtra(Constant.menuID);
 
         progressBar = findViewById(R.id.progressBar);
         btn_camera = findViewById(R.id.btn_camera);
@@ -127,20 +133,7 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
             finish();
         });
         setupPrioritySpinner();
-        if (!isFromSteps) {
-            getMainMenuList();
-        } else {
-            spPriority.setVisibility(View.GONE);
-            if (!hasImageSupport) {
-                edt_comment.setVisibility(View.VISIBLE);
-                btn_camera.setVisibility(View.GONE);
-            }else {
-                edt_comment.setVisibility(View.GONE);
-                btn_camera.setVisibility(View.VISIBLE);
-            }
-        }
-        // You can do the assignment inside onAttach or onCreate, i.e, before the activity is displayed
-
+        getMainMenuList();
 
         btn_camera.setOnClickListener(v -> {
             if (hasPermissions(getApplicationContext())) {
@@ -235,7 +228,7 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
 
     private void setupMainmenuSpinner() {
         spinnerMenu.setVisibility(View.VISIBLE);
-        ArrayAdapter<MainMenuResponse> adapterMainmenu = new ArrayAdapter<MainMenuResponse>(getApplicationContext(), android.R.layout.simple_spinner_item, mainmenuList);
+        adapterMainmenu = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, mainmenuList);
         adapterMainmenu.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinnerMenu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -254,17 +247,19 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
         spinnerMenu.setAdapter(adapterMainmenu);
     }
 
+
     private void setupProcedureSpinner() {
         spProcedure.setVisibility(View.VISIBLE);
-        ArrayAdapter<ProcedureResponse> adapter =
+        adapterProcedure =
                 new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, procedureList);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterProcedure.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spProcedure.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position != 0)
+                if (position != 0) {
                     getStespList(procedureList.get(position).getId());
+                }
             }
 
             @Override
@@ -272,15 +267,15 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
 
             }
         });
-        spProcedure.setAdapter(adapter);
+        spProcedure.setAdapter(adapterProcedure);
     }
 
     private void setupStepsSpinner() {
         spSteps.setVisibility(View.VISIBLE);
-        ArrayAdapter<StepsResponse> adapter =
+        adapterSteps =
                 new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, stepsList);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spSteps.setAdapter(adapter);
+        adapterSteps.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spSteps.setAdapter(adapterSteps);
     }
 
     private void setupPrioritySpinner() {
@@ -304,6 +299,18 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
                         mainmenuList.add(mainMenuResponse);
                         mainmenuList.addAll(mainMenuResponses);
                         setupMainmenuSpinner();
+
+                        runOnUiThread(() -> {
+                            for (int position = 0; position < mainmenuList.size() - 1; position++) {
+                                MainMenuResponse value = mainmenuList.get(position);
+                                if (value.getId() != null && value.getId().equals(menuID)) {
+                                    spinnerMenu.setSelection(position);
+                                    menuID = "";
+                                    return;
+                                }
+                            }
+                        });
+
                     } else {
                         spinnerMenu.setVisibility(View.GONE);
                         spProcedure.setVisibility(View.GONE);
@@ -334,9 +341,27 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
                         procedureList.add(procedureResponse);
                         procedureList.addAll(mainMenuResponses);
                         setupProcedureSpinner();
+
+                        runOnUiThread(() -> {
+                            for (int position = 0; position < procedureList.size() - 1; position++) {
+                                ProcedureResponse value = procedureList.get(position);
+                                if (value.getId() != null && value.getId().equals(procedureID)) {
+                                    spProcedure.setSelection(position);
+                                    procedureID = "";
+                                    return;
+                                }
+                            }
+                        });
                     } else {
                         spProcedure.setVisibility(View.GONE);
                         spSteps.setVisibility(View.GONE);
+                        procedureList.clear();
+                        stepsList.clear();
+
+                        adapterProcedure.notifyDataSetChanged();
+                        adapterSteps.notifyDataSetChanged();
+
+
                     }
                 }
 
@@ -362,8 +387,23 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
                         stepsList.add(stepsResponse);
                         stepsList.addAll(mainMenuResponses);
                         setupStepsSpinner();
+
+
+                        runOnUiThread(() -> {
+                            for (int position = 0; position < stepsList.size() - 1; position++) {
+                                StepsResponse value = stepsList.get(position);
+                                if (value.getId() != null && value.getId().equals(stepID)) {
+                                    spSteps.setSelection(position);
+                                    stepID = "";
+                                    return;
+                                }
+                            }
+                        });
+
                     } else {
                         spSteps.setVisibility(View.GONE);
+                        stepsList.clear();
+                        adapterSteps.notifyDataSetChanged();
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), "Fail", Toast.LENGTH_SHORT).show();
@@ -388,16 +428,13 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
         if (spinnerMenu.getSelectedItemPosition() > 0) {
             surveyRequest.setMenuId(mainmenuList.get(spinnerMenu.getSelectedItemPosition()).getId());
         }
-        if (spProcedure.getSelectedItemPosition() > 0) {
+        if (spProcedure.getSelectedItemPosition() > 0 && procedureList.size() > 0) {
             surveyRequest.setProcedureId(procedureList.get(spProcedure.getSelectedItemPosition()).getId());
         }
-        if (spSteps.getSelectedItemPosition() > 0) {
+        if (spSteps.getSelectedItemPosition() > 0 && stepsList.size() > 0) {
             surveyRequest.setStepId(stepsList.get(spSteps.getSelectedItemPosition()).getId());
         }
 
-        if (isFromSteps) {
-            surveyRequest.setStepId(stepID);
-        }
 
         if (spPriority.getSelectedItemPosition() > 0) {
             surveyRequest.setPriority(priority[spPriority.getSelectedItemPosition()]);
@@ -422,7 +459,7 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
                         cameraImage.setVisibility(View.GONE);
                         fileURI = null;
                         Toast.makeText(getApplicationContext(), "Submitted", Toast.LENGTH_SHORT).show();
-
+                        finish();
                     } else {
                         Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
                     }
