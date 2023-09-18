@@ -143,22 +143,26 @@ public class StepsDetailsScreenActivity extends BaseActivity implements OnViewPa
     public void onTextButtonClick(int position) {
         Intent intent = new Intent(StepsDetailsScreenActivity.this, MakeObservationActivity.class);
         intent.putExtra(Constant.stepID, stepsList.get(position).getId());
-        intent.putExtra(Constant.menuID,menuID);
-        intent.putExtra(Constant.procedureID,procedureID);
+        intent.putExtra(Constant.menuID, menuID);
+        intent.putExtra(Constant.procedureID, procedureID);
 //        intent.putExtra(Constant.SCREEN_FROM_STEPS, true);
         startActivity(intent);
+        stepsList.get(position).setTextSubmitted(true);
+        pagerAdapter.notifyItemChanged(position);
     }
 
     @Override
     public void onTakePictureClick(int position) {
         Intent intent = new Intent(StepsDetailsScreenActivity.this, MakeObservationActivity.class);
         intent.putExtra(Constant.stepID, stepsList.get(position).getId());
-        intent.putExtra(Constant.menuID,menuID);
-        intent.putExtra(Constant.procedureID,procedureID);
+        intent.putExtra(Constant.menuID, menuID);
+        intent.putExtra(Constant.procedureID, procedureID);
 
 //        intent.putExtra(Constant.SCREEN_FROM_STEPS, true);
 //        intent.putExtra(Constant.SCREEN_FROM_STEPS_CAMERA, true);
         startActivity(intent);
+        stepsList.get(position).setMediaSubmitted(true);
+        pagerAdapter.notifyItemChanged(position);
     }
 
 

@@ -2,6 +2,7 @@ package com.utility.app.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,7 +73,6 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
         holder.webview.setVisibility(View.GONE);
         holder.playerView.setVisibility(View.GONE);
         holder.txt_description.setVisibility(View.VISIBLE);
-        Log.d("XXXXX", "75");
 
         if (stepsResponse.getMediaType().equals("URL")) {
 //            holder.txt_description.setVisibility(View.GONE);
@@ -148,15 +148,54 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
             onViewPagerClickListener.onTakePictureClick(position);
         });
 
+        holder.btn_input_type.setText(stepsResponse.getInputDataType());
         holder.btn_input_type.setOnClickListener(v -> {
             PopupMenu popupMenu = new PopupMenu(context, v);
             popupMenu.getMenuInflater().inflate(R.menu.poup_menu, popupMenu.getMenu());
             popupMenu.setOnMenuItemClickListener(menuItem -> {
+                arrayList.get(position).setInputDataType(menuItem.getTitle().toString());
+                arrayList.get(position).setInputSubmitted(true);
+                notifyItemChanged(position);
                 submitTask(context, stepsResponse, menuItem.getTitle().toString());
                 return true;
             });
             popupMenu.show();
         });
+
+
+        if(stepsResponse.isMediaSubmitted())
+        {
+            Drawable img = context.getResources().getDrawable(R.drawable.camera_selected);
+            img.setBounds(0, 0, 60, 60);
+            holder.btn_camera.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+
+        }else {
+            Drawable img = context.getResources().getDrawable(R.drawable.camera);
+            img.setBounds(0, 0, 60, 60);
+            holder.btn_camera.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+        }
+        if(stepsResponse.isInputSubmitted())
+        {
+            Drawable img = context.getResources().getDrawable(R.drawable.yes_selected);
+            img.setBounds(0, 0, 60, 60);
+            holder.btn_input_type.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+
+        }else {
+            Drawable img = context.getResources().getDrawable(R.drawable.yes);
+            img.setBounds(0, 0, 60, 60);
+            holder.btn_input_type.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+        }
+        if(stepsResponse.isTextSubmitted())
+        {
+            Drawable img = context.getResources().getDrawable(R.drawable.text_selected);
+            img.setBounds(0, 0, 60, 60);
+            holder.btnTextAdd.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+
+        }else {
+            Drawable img = context.getResources().getDrawable(R.drawable.text);
+            img.setBounds(0, 0, 60, 60);
+            holder.btnTextAdd.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+        }
     }
 
 

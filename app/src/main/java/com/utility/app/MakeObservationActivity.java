@@ -1,5 +1,7 @@
 package com.utility.app;
 
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -8,12 +10,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,6 +32,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.app.ActivityCompat;
+import androidx.exifinterface.media.ExifInterface;
 
 import com.utility.app.listener.OnFileUploadListner;
 import com.utility.app.models.MainMenuResponse;
@@ -79,8 +84,25 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
                                 getContentResolver(), fileURI);
                     } catch (IOException e) {
                     }
+                    ExifInterface exif = null;
+                    try {
+                        exif = new ExifInterface(FileUtils.getFile(getApplicationContext(), fileURI));
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+                    Bitmap bmRotated = rotateBitmap(thumbnail, orientation);
+
+                    DisplayMetrics displayMetrics = new DisplayMetrics();
+                    getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+                    int height = cameraImage.getLayoutParams().height;
+
+                    int newWidth = (height * bmRotated.getWidth()) / bmRotated.getHeight();
+                    cameraImage.getLayoutParams().width = newWidth;
+                    cameraImage.getLayoutParams().height = height;
+
                     cameraImage.setVisibility(View.VISIBLE);
-                    cameraImage.setImageBitmap(thumbnail);
+                    cameraImage.setImageBitmap(bmRotated);
                 }
             });
     ActivityResultLauncher<Intent> videoActivityResultLauncher = registerForActivityResult(
@@ -90,6 +112,50 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
                     cameraImage.setVisibility(View.VISIBLE);
                 }
             });
+
+
+    public static Bitmap rotateBitmap(Bitmap bitmap, int orientation) {
+
+        Matrix matrix = new Matrix();
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_NORMAL:
+                return bitmap;
+            case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
+                matrix.setScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                matrix.setRotate(180);
+                break;
+            case ExifInterface.ORIENTATION_FLIP_VERTICAL:
+                matrix.setRotate(180);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_TRANSPOSE:
+                matrix.setRotate(90);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                matrix.setRotate(90);
+                break;
+            case ExifInterface.ORIENTATION_TRANSVERSE:
+                matrix.setRotate(-90);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                matrix.setRotate(-90);
+                break;
+            default:
+                return bitmap;
+        }
+        try {
+            Bitmap bmRotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+            bitmap.recycle();
+            return bmRotated;
+        } catch (OutOfMemoryError e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,7 +179,7 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
         cameraImage = findViewById(R.id.camera_image);
         btn_next.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(MakeObservationActivity.this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar));
-            builder.setTitle("Confirm !").setMessage("Are sure you want to submit task details now?")
+            builder.setTitle("Confirm !").setMessage("Are you sure want to submit task details ?")
                     .setCancelable(false)
                     .setPositiveButton("Yes", (dialog, id) -> {
                         if (fileURI != null) {
@@ -197,12 +263,15 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
 
     private void takePictureFromCamera() {
         ContentValues values = new ContentValues();
+
         values.put(MediaStore.Images.Media.TITLE, "Camera Photo");
         values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
         String localfileName = String.valueOf(new Date().getTime());
         values.put(MediaStore.MediaColumns.DISPLAY_NAME, "devicepic_" + localfileName + ".jpg");
         values.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg");
         values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DCIM);
+        values.put(MediaStore.MediaColumns.ORIENTATION,SCREEN_ORIENTATION_LANDSCAPE);
+        values.put(MediaStore.Images.ImageColumns.ORIENTATION,SCREEN_ORIENTATION_LANDSCAPE);
         fileURI = getContentResolver().insert(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

@@ -37,6 +37,36 @@ public class StepsResponse implements Parcelable {
     @Expose
     private String createdAt;
 
+    private boolean isInputSubmitted;
+
+    public boolean isInputSubmitted() {
+        return isInputSubmitted;
+    }
+
+    public void setInputSubmitted(boolean inputSubmitted) {
+        isInputSubmitted = inputSubmitted;
+    }
+
+    private boolean isTextSubmitted;
+
+    public boolean isTextSubmitted() {
+        return isTextSubmitted;
+    }
+
+    public void setTextSubmitted(boolean textSubmitted) {
+        isTextSubmitted = textSubmitted;
+    }
+
+    public boolean isMediaSubmitted() {
+        return isMediaSubmitted;
+    }
+
+    public void setMediaSubmitted(boolean mediaSubmitted) {
+        isMediaSubmitted = mediaSubmitted;
+    }
+
+    private boolean isMediaSubmitted;
+
     public Uri getFileURI() {
         return fileURI;
     }

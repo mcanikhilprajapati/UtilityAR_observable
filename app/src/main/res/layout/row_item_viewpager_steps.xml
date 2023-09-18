@@ -102,7 +102,6 @@
                     android:drawableTop="@drawable/text"
                     android:fontFamily="@font/roboto_medium"
                     android:text="Text"
-
                     android:textAllCaps="false"
                     android:textSize="16sp"></Button>
 
