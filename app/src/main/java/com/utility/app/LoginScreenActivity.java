@@ -6,6 +6,7 @@ import static com.utility.app.SessionManager.COMMUNICATIONUSERID;
 import static com.utility.app.SessionManager.EMAIL;
 import static com.utility.app.SessionManager.GROUPCALL_ID;
 import static com.utility.app.SessionManager.JWT;
+import static com.utility.app.SessionManager.SCREEN_MODE;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,15 +14,11 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Display;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.LinearLayoutCompat;
@@ -37,7 +34,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginScreenActivity extends BaseActivity implements View.OnClickListener {
-    AppCompatButton btnLogin,btnHeadsetMode;
+    AppCompatButton btnLogin, btnHeadsetMode;
     AppCompatEditText edtUsername, edtPassword;
     ProgressBar progressBar;
     LinearLayoutCompat main_container;
@@ -45,14 +42,8 @@ public class LoginScreenActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_login_screen);
-
-
-        // init UI
         initUI();
 
         //Check for stored session and refresh token if already logded in.
@@ -91,12 +82,14 @@ public class LoginScreenActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.btn_headset_mode:
                 int orientation = getApplicationContext().getResources().getConfiguration().orientation;
-                switch(orientation) {
+                switch (orientation) {
                     case Configuration.ORIENTATION_PORTRAIT:
-                        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                        SessionManager.getInstance().setBoolen(SCREEN_MODE, true);
                         break;
                     case Configuration.ORIENTATION_LANDSCAPE:
-                        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                        SessionManager.getInstance().setBoolen(SCREEN_MODE, false);
                         break;
                 }
                 break;
@@ -126,6 +119,7 @@ public class LoginScreenActivity extends BaseActivity implements View.OnClickLis
                         SessionManager.getInstance().setValue(JWT, loginResponse.getJwt());
                         SessionManager.getInstance().setValue(GROUPCALL_ID, loginResponse.getGroupCallId());
                         SessionManager.getInstance().setValue(EMAIL, loginResponse.getEmail());
+
                         getToken(loginResponse.getJwt());
                     } else {
                         Toast.makeText(LoginScreenActivity.this, "Something went wrong at login", Toast.LENGTH_SHORT).show();

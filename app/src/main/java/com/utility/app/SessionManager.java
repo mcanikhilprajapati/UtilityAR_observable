@@ -21,6 +21,7 @@ public class SessionManager {
     public static final String GROUPCALL_ID="groupCallId";
     public static final String EMAIL="email";
     public static final String TOKEN ="token" ;
+    public static final String SCREEN_MODE ="screenmode" ;
 
     public SessionManager(Context context) {
         this._context = context;
@@ -43,7 +44,10 @@ public class SessionManager {
         editor.putString(key, value);
         editor.commit();
     }
-
+    public void setBoolen(String key, boolean value) {
+        editor.putBoolean(key, value);
+        editor.commit();
+    }
     public void logout() {
         editor.remove(JWT);
         editor.remove(COMMUNICATIONUSERID);

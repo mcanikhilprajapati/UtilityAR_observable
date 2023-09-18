@@ -34,18 +34,18 @@
             android:name="com.utility.app.MakeObservationActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
-            android:screenOrientation="sensor" />
+            android:screenOrientation="locked" />
 
         <activity
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:name="com.utility.app.StepsDetailsScreenActivity"
             android:exported="false"
-            android:screenOrientation="sensor" />
+            android:screenOrientation="locked" />
         <activity
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:name="com.utility.app.LoginScreenActivity"
             android:exported="true"
-            android:screenOrientation="sensor">
+            android:screenOrientation="locked">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -64,17 +64,17 @@ See https://developer.android.com/about/versions/pie/android-9.0-changes-28#apac
         <activity
             android:name="com.utility.app.MainMenuScreenActivity"
             android:exported="true"
-            android:screenOrientation="sensor" />
+            android:screenOrientation="locked" />
         <activity
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:name="com.utility.app.ProcedureScreenActivity"
             android:exported="true"
-            android:screenOrientation="sensor" />
+            android:screenOrientation="locked" />
         <activity
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:name="com.utility.app.CompleteScreenActivity"
             android:exported="true"
-            android:screenOrientation="sensor" />
+            android:screenOrientation="locked" />
     </application>
 
 </manifest>

@@ -36,6 +36,7 @@ public class StepsDetailsScreenActivity extends BaseActivity implements OnViewPa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_steps_details_screen);
         Intent myIntent = getIntent();
         procedureID = myIntent.getStringExtra(Constant.procedureID);

@@ -94,6 +94,7 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_make_observation);
 
         Intent myIntent = getIntent();
@@ -357,9 +358,10 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
                         spSteps.setVisibility(View.GONE);
                         procedureList.clear();
                         stepsList.clear();
-
-                        adapterProcedure.notifyDataSetChanged();
-                        adapterSteps.notifyDataSetChanged();
+                        if (adapterProcedure != null)
+                            adapterProcedure.notifyDataSetChanged();
+                        if (adapterSteps != null)
+                            adapterSteps.notifyDataSetChanged();
 
 
                     }
@@ -403,7 +405,8 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
                     } else {
                         spSteps.setVisibility(View.GONE);
                         stepsList.clear();
-                        adapterSteps.notifyDataSetChanged();
+                        if (adapterSteps != null)
+                            adapterSteps.notifyDataSetChanged();
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), "Fail", Toast.LENGTH_SHORT).show();
