@@ -14,6 +14,7 @@ public class Constant {
     public static final String stepID = "stepID";
     public static final String SCREEN_FROM_STEPS = "from";
     public static final String SCREEN_FROM_STEPS_CAMERA = "from_camera_allow";
+    public static final String STEP_INDEX = "stepindex";
     /*media types*/
     public static final String IMAGE="IMAGE" ;
     public static final String VIDEO ="VIDEO";

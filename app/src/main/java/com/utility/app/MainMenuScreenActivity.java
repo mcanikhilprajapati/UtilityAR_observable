@@ -36,7 +36,6 @@ import retrofit2.Response;
 public class MainMenuScreenActivity extends BaseActivity {
 
 
-    Uri imageUri = null;
     private ArrayList<MainMenuResponse> mainmenuList = new ArrayList<>();
     private RecyclerView courseRV;
     private MainmenuAdapter mainmenuAdapter;

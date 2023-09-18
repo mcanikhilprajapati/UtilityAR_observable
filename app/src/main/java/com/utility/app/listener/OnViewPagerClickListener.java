@@ -4,7 +4,6 @@ public interface OnViewPagerClickListener {
     void onNextClick(int position);
     void onBackClick(int position);
     void onHomeClick(int position);
-    void onTextButtonClick(int position);
-    void onTakePictureClick(int position);
+    void onButtonClick(int position,boolean image);
 
 }

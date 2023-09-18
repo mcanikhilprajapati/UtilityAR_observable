@@ -9,7 +9,12 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.utility.app.models.StepsResponse;
+
+import java.util.ArrayList;
+
 public class BaseActivity extends AppCompatActivity {
+    public static ArrayList<StepsResponse> globlestepsList = new ArrayList<>();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         try {

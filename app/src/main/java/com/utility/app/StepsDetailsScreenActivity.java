@@ -26,7 +26,7 @@ public class StepsDetailsScreenActivity extends BaseActivity implements OnViewPa
     //    private Button btn_next, btn_back;
     String procedureID = "";
     String menuID = "";
-    private ArrayList<StepsResponse> stepsList = new ArrayList<>();
+
     ProgressBar progressBar;
     private ViewPager2 viewPager;
     private StepsPagerAdapter pagerAdapter;
@@ -55,7 +55,7 @@ public class StepsDetailsScreenActivity extends BaseActivity implements OnViewPa
         });
 
         viewPager = findViewById(R.id.viewPager);
-        pagerAdapter = new StepsPagerAdapter(getApplicationContext(), stepsList, this);
+        pagerAdapter = new StepsPagerAdapter(getApplicationContext(), globlestepsList, this);
         viewPager.setAdapter(pagerAdapter);
         viewPager.setUserInputEnabled(false);
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -77,7 +77,7 @@ public class StepsDetailsScreenActivity extends BaseActivity implements OnViewPa
     }
 
     private void getStespList() {
-        stepsList.clear();
+        globlestepsList.clear();
         progressBar.setVisibility(View.VISIBLE);
         String param = procedureID;
         ApiClient.getStepsList(getApplicationContext(), true, param).enqueue(new Callback<ArrayList<StepsResponse>>() {
@@ -88,7 +88,7 @@ public class StepsDetailsScreenActivity extends BaseActivity implements OnViewPa
                 if (response.isSuccessful()) {
                     ArrayList<StepsResponse> mainMenuResponses = response.body();
                     if (mainMenuResponses.size() > 0) {
-                        stepsList.addAll(mainMenuResponses);
+                        globlestepsList.addAll(mainMenuResponses);
                         pagerAdapter.notifyDataSetChanged();
                         txt_nodata.setVisibility(View.GONE);
                     } else {
@@ -113,7 +113,7 @@ public class StepsDetailsScreenActivity extends BaseActivity implements OnViewPa
     @Override
     public void onNextClick(int position) {
 
-        if (position >= stepsList.size() - 1) {
+        if (position >= globlestepsList.size() - 1) {
             Intent intent = new Intent(StepsDetailsScreenActivity.this, CompleteScreenActivity.class);
             startActivity(intent);
         } else {
@@ -139,31 +139,34 @@ public class StepsDetailsScreenActivity extends BaseActivity implements OnViewPa
         finish();
     }
 
+
     @Override
-    public void onTextButtonClick(int position) {
+    public void onButtonClick(int position, boolean isForImage) {
         Intent intent = new Intent(StepsDetailsScreenActivity.this, MakeObservationActivity.class);
-        intent.putExtra(Constant.stepID, stepsList.get(position).getId());
+        intent.putExtra(Constant.stepID, globlestepsList.get(position).getId());
         intent.putExtra(Constant.menuID, menuID);
         intent.putExtra(Constant.procedureID, procedureID);
-//        intent.putExtra(Constant.SCREEN_FROM_STEPS, true);
+        intent.putExtra(Constant.SCREEN_FROM_STEPS, true);
+        intent.putExtra(Constant.STEP_INDEX, position);
+        intent.putExtra(Constant.SCREEN_FROM_STEPS_CAMERA, isForImage);
         startActivity(intent);
-        stepsList.get(position).setTextSubmitted(true);
+
         pagerAdapter.notifyItemChanged(position);
     }
 
     @Override
-    public void onTakePictureClick(int position) {
-        Intent intent = new Intent(StepsDetailsScreenActivity.this, MakeObservationActivity.class);
-        intent.putExtra(Constant.stepID, stepsList.get(position).getId());
-        intent.putExtra(Constant.menuID, menuID);
-        intent.putExtra(Constant.procedureID, procedureID);
-
-//        intent.putExtra(Constant.SCREEN_FROM_STEPS, true);
-//        intent.putExtra(Constant.SCREEN_FROM_STEPS_CAMERA, true);
-        startActivity(intent);
-        stepsList.get(position).setMediaSubmitted(true);
-        pagerAdapter.notifyItemChanged(position);
+    protected void onResume() {
+        super.onResume();
+        if (pagerAdapter != null) {
+            //to update status of observations action taken
+            pagerAdapter.notifyDataSetChanged();
+        }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        globlestepsList.clear();
 
+    }
 }

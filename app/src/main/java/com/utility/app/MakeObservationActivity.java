@@ -74,6 +74,9 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
     String stepID = "";
     String procedureID = "";
     String menuID = "";
+    boolean isFromStepScreen = false;
+    boolean isFromImageScreen = false;
+    int stepIndex = -1;
     ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -167,7 +170,11 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
         stepID = myIntent.getStringExtra(Constant.stepID);
         procedureID = myIntent.getStringExtra(Constant.procedureID);
         menuID = myIntent.getStringExtra(Constant.menuID);
-
+        isFromStepScreen = myIntent.getBooleanExtra(Constant.SCREEN_FROM_STEPS, false);
+        if (isFromStepScreen) {
+            isFromImageScreen = myIntent.getBooleanExtra(Constant.SCREEN_FROM_STEPS_CAMERA, false);
+            stepIndex = myIntent.getIntExtra(Constant.STEP_INDEX, -1);
+        }
         progressBar = findViewById(R.id.progressBar);
         btn_camera = findViewById(R.id.btn_camera);
         btn_next = findViewById(R.id.btn_next);
@@ -270,8 +277,8 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
         values.put(MediaStore.MediaColumns.DISPLAY_NAME, "devicepic_" + localfileName + ".jpg");
         values.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg");
         values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DCIM);
-        values.put(MediaStore.MediaColumns.ORIENTATION,SCREEN_ORIENTATION_LANDSCAPE);
-        values.put(MediaStore.Images.ImageColumns.ORIENTATION,SCREEN_ORIENTATION_LANDSCAPE);
+        values.put(MediaStore.MediaColumns.ORIENTATION, SCREEN_ORIENTATION_LANDSCAPE);
+        values.put(MediaStore.Images.ImageColumns.ORIENTATION, SCREEN_ORIENTATION_LANDSCAPE);
         fileURI = getContentResolver().insert(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -531,6 +538,14 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
                         cameraImage.setVisibility(View.GONE);
                         fileURI = null;
                         Toast.makeText(getApplicationContext(), "Submitted", Toast.LENGTH_SHORT).show();
+                        if (isFromStepScreen && stepIndex > 0) {
+                            if (isFromImageScreen) {
+                                globlestepsList.get(stepIndex).setMediaSubmitted(true);
+                            } else {
+                                globlestepsList.get(stepIndex).setTextSubmitted(true);
+                            }
+                        }
+
                         finish();
                     } else {
                         Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_SHORT).show();

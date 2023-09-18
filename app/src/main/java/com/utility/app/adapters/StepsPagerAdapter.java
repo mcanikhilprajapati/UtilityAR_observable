@@ -3,7 +3,6 @@ package com.utility.app.adapters;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,7 +67,11 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
         StepsResponse stepsResponse = arrayList.get(position);
         holder.txt_step_name.setText(stepsResponse.getName());
         holder.txt_description.setText(stepsResponse.getDescription());
-
+        if (position == arrayList.size() - 1) {
+            holder.btn_next.setText("Finish");
+        } else {
+            holder.btn_next.setText("Next");
+        }
         holder.img_task_image.setVisibility(View.GONE);
         holder.webview.setVisibility(View.GONE);
         holder.playerView.setVisibility(View.GONE);
@@ -112,18 +115,35 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
             holder.playerView.setFocusable(true);
 
             holder.playerView.setPlayer(player);
-            holder.playerView.setUseController(true);
+            holder.playerView.setUseController(false);
             MediaItem mediaItem = MediaItem.fromUri(stepsResponse.getMedia());
             player.setMediaItem(mediaItem);
             player.prepare();
-            player.play();
+
+            holder.playerView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+                @Override
+                public void onViewAttachedToWindow(View v) {
+                    if(holder.playerView!=null)
+                        holder.playerView.getPlayer().setPlayWhenReady(true);
+                }
+
+                @Override
+                public void onViewDetachedFromWindow(View v) {
+                    if(holder.playerView!=null)
+                        holder.playerView.getPlayer().pause();
+
+                }
+            });
 //            startPlayer();
         } else {
+//            player.pause();
 //            pausePlayer();
         }
+
+
         holder.btnTextAdd.setOnClickListener(v -> {
             if (onViewPagerClickListener != null) {
-                onViewPagerClickListener.onTextButtonClick(position);
+                onViewPagerClickListener.onButtonClick(position, false);
             }
         });
 
@@ -145,7 +165,7 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
 
 
         holder.btn_camera.setOnClickListener(v -> {
-            onViewPagerClickListener.onTakePictureClick(position);
+            onViewPagerClickListener.onButtonClick(position, true);
         });
 
         holder.btn_input_type.setText(stepsResponse.getInputDataType());
@@ -163,35 +183,32 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
         });
 
 
-        if(stepsResponse.isMediaSubmitted())
-        {
+        if (stepsResponse.isMediaSubmitted()) {
             Drawable img = context.getResources().getDrawable(R.drawable.camera_selected);
             img.setBounds(0, 0, 60, 60);
             holder.btn_camera.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 
-        }else {
+        } else {
             Drawable img = context.getResources().getDrawable(R.drawable.camera);
             img.setBounds(0, 0, 60, 60);
             holder.btn_camera.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
         }
-        if(stepsResponse.isInputSubmitted())
-        {
+        if (stepsResponse.isInputSubmitted()) {
             Drawable img = context.getResources().getDrawable(R.drawable.yes_selected);
             img.setBounds(0, 0, 60, 60);
             holder.btn_input_type.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 
-        }else {
+        } else {
             Drawable img = context.getResources().getDrawable(R.drawable.yes);
             img.setBounds(0, 0, 60, 60);
             holder.btn_input_type.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
         }
-        if(stepsResponse.isTextSubmitted())
-        {
+        if (stepsResponse.isTextSubmitted()) {
             Drawable img = context.getResources().getDrawable(R.drawable.text_selected);
             img.setBounds(0, 0, 60, 60);
             holder.btnTextAdd.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 
-        }else {
+        } else {
             Drawable img = context.getResources().getDrawable(R.drawable.text);
             img.setBounds(0, 0, 60, 60);
             holder.btnTextAdd.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
