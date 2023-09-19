@@ -17,10 +17,10 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:padding="10dp"
-        android:text="There is nothing to display"
+        android:text="@string/main_menu_not_created_for_this_organization"
         android:textAlignment="center"
         android:textColor="@color/colorWhite"
-        android:visibility="visible">
+        android:visibility="gone">
 
     </TextView>
 
@@ -54,7 +54,7 @@
             android:id="@+id/btn_make_observation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_style"
+            android:background="@drawable/button_styleborder_white"
             android:maxLines="1"
             android:paddingHorizontal="40dp"
             android:text="Make an Observation"
@@ -68,11 +68,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dp"
-            android:background="@drawable/button_style"
+            android:background="@drawable/button_styleborder_white"
             android:fontFamily="@font/roboto_medium"
             android:text="Change User"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
+            android:paddingHorizontal="25dp"
             android:textSize="16sp"></Button>
     </androidx.appcompat.widget.LinearLayoutCompat>
 

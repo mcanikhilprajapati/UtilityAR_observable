@@ -3,13 +3,17 @@ package com.utility.app.adapters;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.PopupMenu;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,7 +70,15 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
         // setting data to our text views from our modal class.
         StepsResponse stepsResponse = arrayList.get(position);
         holder.txt_step_name.setText(stepsResponse.getName());
-        holder.txt_description.setText(stepsResponse.getDescription());
+        if (!TextUtils.isEmpty(stepsResponse.getDescription())) {
+            holder.txt_description.setText(stepsResponse.getDescription());
+            holder.txt_description.setVisibility(View.VISIBLE);
+            holder.sc_txt_description.setVisibility(View.VISIBLE);
+        } else {
+            holder.txt_description.setVisibility(View.GONE);
+            holder.sc_txt_description.setVisibility(View.GONE);
+        }
+
         if (position == arrayList.size() - 1) {
             holder.btn_next.setText("Finish");
         } else {
@@ -75,16 +87,21 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
         holder.img_task_image.setVisibility(View.GONE);
         holder.webview.setVisibility(View.GONE);
         holder.playerView.setVisibility(View.GONE);
-        holder.txt_description.setVisibility(View.VISIBLE);
+
 
         if (stepsResponse.getMediaType().equals("URL")) {
 //            holder.txt_description.setVisibility(View.GONE);
 //            holder.bottom_layout.setVisibility(View.GONE);
             holder.webview.setVisibility(View.VISIBLE);
-            WebSettings webSettings = holder.webview.getSettings();
+
+            WebSettings webSettings=holder.webview.getSettings();
             webSettings.setJavaScriptEnabled(true);
-            webSettings.setBuiltInZoomControls(true);
+//            holder.webview.clearCache(true);
+//            holder.webview.clearHistory();
+            webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
             holder.webview.loadUrl(stepsResponse.getMedia());
+            holder.webview.setWebChromeClient(new WebChromeClient());
+
         }
         if (stepsResponse.getMediaType().equals("IMAGE")) {
             holder.img_task_image.setVisibility(View.VISIBLE);
@@ -119,18 +136,18 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
             MediaItem mediaItem = MediaItem.fromUri(stepsResponse.getMedia());
             player.setMediaItem(mediaItem);
             player.prepare();
-
+            player.play();
             holder.playerView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
                 @Override
                 public void onViewAttachedToWindow(View v) {
-                    if(holder.playerView!=null)
-                        holder.playerView.getPlayer().setPlayWhenReady(true);
+//                    if (holder.playerView != null)
+//                        holder.playerView.getPlayer().setPlayWhenReady(true);
                 }
 
                 @Override
                 public void onViewDetachedFromWindow(View v) {
-                    if(holder.playerView!=null)
-                        holder.playerView.getPlayer().pause();
+//                    if (holder.playerView != null)
+//                        holder.playerView.getPlayer().pause();
 
                 }
             });
@@ -227,6 +244,7 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
         private AppCompatImageView img_task_image;
         private PlayerView playerView;
         private WebView webview;
+        private ScrollView sc_txt_description;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -242,6 +260,7 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
             btn_camera = itemView.findViewById(R.id.btn_camera);
             btn_input_type = itemView.findViewById(R.id.btn_input_type);
             webview = itemView.findViewById(R.id.webview);
+            sc_txt_description = itemView.findViewById(R.id.sc_txt_description);
 
         }
     }

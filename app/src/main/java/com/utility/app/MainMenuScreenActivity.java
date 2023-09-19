@@ -45,16 +45,7 @@ public class MainMenuScreenActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try {
 
-
-            if (SessionManager.pref.getBoolean(SCREEN_MODE, false)) {
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-            } else
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        } catch (Exception s) {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }
         setContentView(R.layout.activity_main_menu);
         initUI();
 

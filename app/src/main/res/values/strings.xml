@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">UtilityAR-O</string>
+    <string name="app_name">UtilityAR Procedures</string>
+    <string name="main_menu_not_created_for_this_organization">Main Menu Not Created For This Organization</string>
 </resources>

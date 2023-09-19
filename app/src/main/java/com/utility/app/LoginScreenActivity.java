@@ -170,6 +170,7 @@ public class LoginScreenActivity extends BaseActivity implements View.OnClickLis
 
     private void gotoLoginScreen() {
         Intent intent = new Intent(getApplicationContext(), MainMenuScreenActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
     }

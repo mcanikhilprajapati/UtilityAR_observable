@@ -6,7 +6,16 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     tools:context="com.utility.app.LoginScreenActivity">
-
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:indeterminate="true"
+        android:layout_centerInParent="true"
+        android:indeterminateTint="@color/colorYellow"
+        android:indeterminateTintMode="src_atop"
+        android:visibility="gone" />
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -49,6 +58,12 @@
                     android:gravity="top"
                     android:hint="Text Comments"
                     android:inputType="textMultiLine" />
+
+                <androidx.media3.ui.PlayerView
+                    android:id="@+id/videoView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="250dp"
+                    android:visibility="gone" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/camera_image"
@@ -97,15 +112,7 @@
                     android:overlapAnchor="false"
                     android:spinnerMode="dropdown" />
 
-                <ProgressBar
-                    android:id="@+id/progressBar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:indeterminate="true"
-                    android:indeterminateTint="@color/colorAccent"
-                    android:indeterminateTintMode="src_atop"
-                    android:visibility="gone" />
+
             </androidx.appcompat.widget.LinearLayoutCompat>
 
 

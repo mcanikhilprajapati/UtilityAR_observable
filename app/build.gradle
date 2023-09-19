@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdk 33
     defaultConfig {
-        applicationId "com.utilityar.observable"
+        applicationId "com.utilityar.procedures"
         minSdkVersion 26
         targetSdkVersion 33
         versionCode 1

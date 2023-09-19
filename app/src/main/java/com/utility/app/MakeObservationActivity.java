@@ -33,6 +33,9 @@ import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.app.ActivityCompat;
 import androidx.exifinterface.media.ExifInterface;
+import androidx.media3.common.MediaItem;
+import androidx.media3.exoplayer.ExoPlayer;
+import androidx.media3.ui.PlayerView;
 
 import com.utility.app.listener.OnFileUploadListner;
 import com.utility.app.models.MainMenuResponse;
@@ -62,13 +65,14 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
     ArrayAdapter<MainMenuResponse> adapterMainmenu;
     ArrayAdapter<ProcedureResponse> adapterProcedure;
     ArrayAdapter<StepsResponse> adapterSteps;
-
+    private ExoPlayer player;
     private AppCompatEditText edt_comment;
     private Uri fileURI;
     private String selectedMedia;
-    private String selectMediaType = Constant.IMAGE;
+    private String selectMediaType = "";
     private AppCompatImageView cameraImage;
     private ProgressBar progressBar;
+    private PlayerView playerView;
 
 
     String stepID = "";
@@ -81,6 +85,7 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if (result.getResultCode() == Activity.RESULT_OK) {
+                    selectMediaType = Constant.IMAGE;
                     Bitmap thumbnail = null;
                     try {
                         thumbnail = MediaStore.Images.Media.getBitmap(
@@ -105,6 +110,7 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
                     cameraImage.getLayoutParams().height = height;
 
                     cameraImage.setVisibility(View.VISIBLE);
+                    playerView.setVisibility(View.GONE);
                     cameraImage.setImageBitmap(bmRotated);
                 }
             });
@@ -112,7 +118,17 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if (result.getResultCode() == Activity.RESULT_OK) {
-                    cameraImage.setVisibility(View.VISIBLE);
+                    selectMediaType = Constant.VIDEO;
+                    cameraImage.setVisibility(View.GONE);
+                    playerView.setVisibility(View.VISIBLE);
+                    playerView.setFocusable(true);
+
+                    playerView.setPlayer(player);
+                    playerView.setUseController(false);
+                    MediaItem mediaItem = MediaItem.fromUri(fileURI);
+                    player.setMediaItem(mediaItem);
+                    player.prepare();
+                    player.play();
                 }
             });
 
@@ -175,6 +191,8 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
             isFromImageScreen = myIntent.getBooleanExtra(Constant.SCREEN_FROM_STEPS_CAMERA, false);
             stepIndex = myIntent.getIntExtra(Constant.STEP_INDEX, -1);
         }
+
+        playerView = findViewById(R.id.videoView);
         progressBar = findViewById(R.id.progressBar);
         btn_camera = findViewById(R.id.btn_camera);
         btn_next = findViewById(R.id.btn_next);
@@ -215,12 +233,11 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
                 builder.setTitle("Take action !").setMessage("Select Video or Image Capture Options")
                         .setCancelable(false)
                         .setPositiveButton("Image", (dialog, id) -> {
-                            selectMediaType = Constant.IMAGE;
+
                             takePictureFromCamera();
                         }).setNegativeButton("Cancel", (dialog, which) -> {
 
                         }).setNeutralButton("Video", (dialog, which) -> {
-                            selectMediaType = Constant.VIDEO;
                             takeVideoFromCamera();
                         });
                 AlertDialog alert = builder.create();
@@ -233,6 +250,7 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
 
         });
 
+        player = new ExoPlayer.Builder(MakeObservationActivity.this).build();
 
     }
 
@@ -576,5 +594,11 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
     public void onFailer() {
         progressBar.setVisibility(View.GONE);
         Toast.makeText(this, "Image Upload fails", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (player != null) player.release();
     }
 }

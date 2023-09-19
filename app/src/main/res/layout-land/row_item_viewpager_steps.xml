@@ -38,18 +38,24 @@
                 android:orientation="horizontal"
                 android:weightSum="1">
 
-                <TextView
-
-                    android:id="@+id/txt_description"
+                <ScrollView
+                    android:id="@+id/sc_txt_description"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_above="@+id/ll_bottom"
                     android:layout_below="@+id/top_layout"
-                    android:layout_weight="0.5"
-                    android:padding="15dp"
-                    android:text="Adequate supervision provided to ensure control measures remain valid for the duration of the work"
-                    android:textColor="#FFFFFF"
-                    android:textSize="18sp" />
+                    android:layout_weight="0.5">
+
+                    <TextView
+                        android:id="@+id/txt_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="15dp"
+                        android:text="Adequate supervision provided to ensure control measures remain valid for the duration of the work"
+                        android:textColor="#FFFFFF"
+                        android:textSize="25sp" />
+                </ScrollView>
+
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/img_task_image"
@@ -60,9 +66,9 @@
 
                 <WebView
                     android:id="@+id/webview"
-                    android:layout_weight="0.5"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5" />
 
                 <androidx.media3.ui.PlayerView
                     android:id="@+id/videoView"
