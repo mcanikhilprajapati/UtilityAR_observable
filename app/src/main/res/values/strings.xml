@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">UtilityAR Procedures</string>
     <string name="main_menu_not_created_for_this_organization">Main Menu Not Created For This Organization</string>
+    <string name="procedure_not_assigned_for_this_menu">Procedure not assigned for this menu</string>
 </resources>

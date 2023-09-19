@@ -78,24 +78,18 @@ public class MainMenuScreenActivity extends BaseActivity {
         btn_make_observation = findViewById(R.id.btn_make_observation);
         courseRV = findViewById(R.id.idRVCourses);
         txtNodata = findViewById(R.id.txt_nodata);
-        btn_make_observation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btn_make_observation.setOnClickListener(v -> {
 //                Intent intent = new Intent(getApplicationContext(), ProcedureScreenActivity.class);
-                Intent intent = new Intent(getApplicationContext(), MakeObservationActivity.class);
-                startActivity(intent);
-            }
+            Intent intent = new Intent(getApplicationContext(), MakeObservationActivity.class);
+            startActivity(intent);
         });
 
-        btnChangeUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SessionManager.getInstance().logout();
-                Intent intent = new Intent(getApplicationContext(), LoginScreenActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                finish();
-            }
+        btnChangeUser.setOnClickListener(v -> {
+            SessionManager.getInstance().logout();
+            Intent intent = new Intent(getApplicationContext(), LoginScreenActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
         });
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
         swipeRefreshLayout.setOnRefreshListener(() -> getMainMenuList());

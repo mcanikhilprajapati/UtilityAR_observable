@@ -140,21 +140,19 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
             holder.playerView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
                 @Override
                 public void onViewAttachedToWindow(View v) {
-//                    if (holder.playerView != null)
-//                        holder.playerView.getPlayer().setPlayWhenReady(true);
+                    if (holder.playerView != null)
+                        holder.playerView.getPlayer().setPlayWhenReady(true);
                 }
 
                 @Override
                 public void onViewDetachedFromWindow(View v) {
-//                    if (holder.playerView != null)
-//                        holder.playerView.getPlayer().pause();
+                    if (holder.playerView != null)
+                        holder.playerView.getPlayer().pause();
 
                 }
             });
-//            startPlayer();
         } else {
-//            player.pause();
-//            pausePlayer();
+
         }
 
 

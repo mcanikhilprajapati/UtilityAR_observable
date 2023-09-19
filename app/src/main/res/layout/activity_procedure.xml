@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/top_layout"
         android:padding="10dp"
-        android:text="Procedure not assigned for this menu"
+        android:text="@string/procedure_not_assigned_for_this_menu"
         android:textAlignment="center"
         android:visibility="gone">
 
