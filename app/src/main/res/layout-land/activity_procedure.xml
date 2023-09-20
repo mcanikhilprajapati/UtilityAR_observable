@@ -57,7 +57,7 @@
         android:padding="10dp"
         android:text="@string/procedure_not_assigned_for_this_menu"
         android:textAlignment="center"
-        android:visibility="visible">
+        android:visibility="gone">
 
     </TextView>
 

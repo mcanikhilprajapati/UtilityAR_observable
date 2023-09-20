@@ -40,7 +40,6 @@ public class MainMenuScreenActivity extends BaseActivity {
     private RecyclerView courseRV;
     private MainmenuAdapter mainmenuAdapter;
     private Button btn_make_observation, btnChangeUser;
-    private TextView txtNodata;
     private SwipeRefreshLayout swipeRefreshLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +76,6 @@ public class MainMenuScreenActivity extends BaseActivity {
         btnChangeUser = findViewById(R.id.btn_change_user);
         btn_make_observation = findViewById(R.id.btn_make_observation);
         courseRV = findViewById(R.id.idRVCourses);
-        txtNodata = findViewById(R.id.txt_nodata);
         btn_make_observation.setOnClickListener(v -> {
 //                Intent intent = new Intent(getApplicationContext(), ProcedureScreenActivity.class);
             Intent intent = new Intent(getApplicationContext(), MakeObservationActivity.class);
@@ -111,16 +109,13 @@ public class MainMenuScreenActivity extends BaseActivity {
                         mainmenuList.addAll(mainMenuResponses);
                         swipeRefreshLayout.setVisibility(View.VISIBLE);
                         mainmenuAdapter.notifyDataSetChanged();
-                        txtNodata.setVisibility(View.GONE);
 
                     } else {
-                        txtNodata.setVisibility(View.VISIBLE);
-                        courseRV.setVisibility(View.VISIBLE);
+                        courseRV.setVisibility(View.GONE);
                     }
                 } else {
                     Toast.makeText(MainMenuScreenActivity.this, "Fail", Toast.LENGTH_SHORT).show();
-                    txtNodata.setVisibility(View.VISIBLE);
-                    courseRV.setVisibility(View.VISIBLE);
+                    courseRV.setVisibility(View.GONE);
                 }
 
             }
@@ -128,8 +123,7 @@ public class MainMenuScreenActivity extends BaseActivity {
             @Override
             public void onFailure(Call<ArrayList<MainMenuResponse>> call, Throwable t) {
                 swipeRefreshLayout.setRefreshing(false);
-                txtNodata.setVisibility(View.VISIBLE);
-                courseRV.setVisibility(View.VISIBLE);
+                courseRV.setVisibility(View.GONE);
                 Toast.makeText(MainMenuScreenActivity.this, "Fail 1", Toast.LENGTH_SHORT).show();
             }
         });

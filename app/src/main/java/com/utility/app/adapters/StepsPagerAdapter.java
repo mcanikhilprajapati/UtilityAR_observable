@@ -132,11 +132,12 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
             holder.playerView.setFocusable(true);
 
             holder.playerView.setPlayer(player);
-            holder.playerView.setUseController(false);
+            holder.playerView.setUseController(true);
             MediaItem mediaItem = MediaItem.fromUri(stepsResponse.getMedia());
             player.setMediaItem(mediaItem);
             player.prepare();
-            player.play();
+//            player.play();
+            
             holder.playerView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
                 @Override
                 public void onViewAttachedToWindow(View v) {
@@ -147,7 +148,7 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<StepsPagerAdapter.Vi
                 @Override
                 public void onViewDetachedFromWindow(View v) {
                     if (holder.playerView != null)
-                        holder.playerView.getPlayer().pause();
+                        holder.playerView.getPlayer().setPlayWhenReady(false);
 
                 }
             });

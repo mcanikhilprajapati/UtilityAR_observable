@@ -35,7 +35,6 @@ public class ProcedureScreenActivity extends BaseActivity {
     private RecyclerView rvProcedure;
     private ProcedureAdapter procedureAdapter;
     private Button btnBack;
-    private TextView txtNodata;
     private SwipeRefreshLayout swipeRefreshLayout;
     String menuID = "";
 
@@ -75,7 +74,6 @@ public class ProcedureScreenActivity extends BaseActivity {
         // initializing our variables.
         btnBack = findViewById(R.id.btn_back);
         rvProcedure = findViewById(R.id.idRVCourses);
-        txtNodata = findViewById(R.id.txt_nodata);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
         swipeRefreshLayout.setOnRefreshListener(() -> getProcedureList());
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -101,15 +99,12 @@ public class ProcedureScreenActivity extends BaseActivity {
                     if (mainMenuResponses.size() > 0) {
                         procedureList.addAll(mainMenuResponses);
                         procedureAdapter.notifyDataSetChanged();
-                        txtNodata.setVisibility(View.GONE);
                     } else {
-                        txtNodata.setVisibility(View.VISIBLE);
-                        rvProcedure.setVisibility(View.VISIBLE);
+                        rvProcedure.setVisibility(View.GONE);
                     }
                 } else {
                     Toast.makeText(ProcedureScreenActivity.this, "Fail", Toast.LENGTH_SHORT).show();
-                    txtNodata.setVisibility(View.VISIBLE);
-                    rvProcedure.setVisibility(View.VISIBLE);
+                    rvProcedure.setVisibility(View.GONE);
                 }
 
             }
@@ -117,8 +112,7 @@ public class ProcedureScreenActivity extends BaseActivity {
             @Override
             public void onFailure(Call<ArrayList<ProcedureResponse>> call, Throwable t) {
                 swipeRefreshLayout.setRefreshing(false);
-                txtNodata.setVisibility(View.VISIBLE);
-                rvProcedure.setVisibility(View.VISIBLE);
+                rvProcedure.setVisibility(View.GONE);
                 Toast.makeText(ProcedureScreenActivity.this, "Fail 1", Toast.LENGTH_SHORT).show();
             }
         });

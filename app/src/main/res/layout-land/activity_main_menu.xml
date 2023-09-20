@@ -11,18 +11,7 @@
         android:id="@+id/top_layout"
         layout="@layout/toolbar" />
 
-    <TextView
-        android:id="@+id/txt_nodata"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:padding="10dp"
-        android:text="@string/main_menu_not_created_for_this_organization"
-        android:textAlignment="center"
-        android:textColor="@color/colorWhite"
-        android:visibility="gone">
 
-    </TextView>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swiperefresh"

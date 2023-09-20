@@ -29,14 +29,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Steps not created for this Procedure"
-            android:textColor="@color/colorWhite" />
 
         <Button
-            android:textColor="@color/colorWhite"
             android:id="@+id/btn_back"
             android:layout_width="wrap_content"
             android:layout_height="130dp"
@@ -46,6 +40,7 @@
             android:fontFamily="@font/roboto_medium"
             android:text="Back"
             android:textAllCaps="false"
+            android:textColor="@color/colorWhite"
             android:textSize="16sp"></Button>
     </LinearLayout>
 

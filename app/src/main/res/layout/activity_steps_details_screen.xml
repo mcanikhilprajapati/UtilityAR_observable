@@ -28,11 +28,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatTextView
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Steps not created for this Procedure" />
 
         <Button
             android:id="@+id/btn_back"

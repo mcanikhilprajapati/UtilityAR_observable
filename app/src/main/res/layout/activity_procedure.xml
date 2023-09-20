@@ -22,8 +22,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_medium"
-            android:textAlignment="center"
             android:text="Procedures / Data Menu"
+            android:textAlignment="center"
             android:textColor="#000"
             android:textSize="25sp"></androidx.appcompat.widget.AppCompatTextView>
 
@@ -34,19 +34,9 @@
             app:tint="#000000" />
 
 
-
     </androidx.appcompat.widget.LinearLayoutCompat>
-    <TextView
-        android:id="@+id/txt_nodata"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/top_layout"
-        android:padding="10dp"
-        android:text="@string/procedure_not_assigned_for_this_menu"
-        android:textAlignment="center"
-        android:visibility="gone">
 
-    </TextView>
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swiperefresh"
         android:layout_width="match_parent"
