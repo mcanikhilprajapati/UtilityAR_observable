@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.utility.app.adapters.StepsPagerAdapter;
+import com.utility.app.adapters.StepsFragmentStateAdapter;
 import com.utility.app.listener.OnViewPagerClickListener;
 import com.utility.app.models.StepsResponse;
 import com.utility.app.retrofit.ApiClient;
@@ -29,7 +29,8 @@ public class StepsDetailsScreenActivity extends BaseActivity implements OnViewPa
 
     ProgressBar progressBar;
     private ViewPager2 viewPager;
-    private StepsPagerAdapter pagerAdapter;
+    //    private StepsPagerAdapter pagerAdapter;
+    StepsFragmentStateAdapter stepsFragmentStateAdapter;
     private LinearLayout txt_nodata;
     private Button btn_back;
 
@@ -55,8 +56,10 @@ public class StepsDetailsScreenActivity extends BaseActivity implements OnViewPa
         });
 
         viewPager = findViewById(R.id.viewPager);
-        pagerAdapter = new StepsPagerAdapter(getApplicationContext(), globlestepsList, this);
-        viewPager.setAdapter(pagerAdapter);
+//        pagerAdapter = new StepsPagerAdapter(getApplicationContext(), globlestepsList, this);
+        stepsFragmentStateAdapter = new StepsFragmentStateAdapter(this, globlestepsList,this);
+        viewPager.setAdapter(stepsFragmentStateAdapter);
+        viewPager.setOffscreenPageLimit(1);
         viewPager.setUserInputEnabled(false);
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
@@ -67,6 +70,7 @@ public class StepsDetailsScreenActivity extends BaseActivity implements OnViewPa
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
+
             }
 
             @Override
@@ -89,7 +93,7 @@ public class StepsDetailsScreenActivity extends BaseActivity implements OnViewPa
                     ArrayList<StepsResponse> mainMenuResponses = response.body();
                     if (mainMenuResponses.size() > 0) {
                         globlestepsList.addAll(mainMenuResponses);
-                        pagerAdapter.notifyDataSetChanged();
+                        stepsFragmentStateAdapter.notifyDataSetChanged();
                         txt_nodata.setVisibility(View.GONE);
                     } else {
                         txt_nodata.setVisibility(View.VISIBLE);
@@ -151,15 +155,15 @@ public class StepsDetailsScreenActivity extends BaseActivity implements OnViewPa
         intent.putExtra(Constant.SCREEN_FROM_STEPS_CAMERA, isForImage);
         startActivity(intent);
 
-        pagerAdapter.notifyItemChanged(position);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (pagerAdapter != null) {
+        if (stepsFragmentStateAdapter != null) {
+
             //to update status of observations action taken
-            pagerAdapter.notifyDataSetChanged();
+            stepsFragmentStateAdapter.notifyDataSetChanged();
         }
     }
 

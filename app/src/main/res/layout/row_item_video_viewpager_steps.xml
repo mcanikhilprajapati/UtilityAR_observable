@@ -37,11 +37,25 @@
                 android:layout_marginVertical="10dp"
                 android:background="@color/colorPrimary"></View>
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img_task_image"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_gravity="center"
+                android:scaleType="fitXY"
+                android:visibility="gone" />
+
+            <WebView
+                android:id="@+id/webview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" />
 
             <androidx.media3.ui.PlayerView
                 android:id="@+id/videoView"
                 android:layout_width="wrap_content"
-                android:layout_height="250dp" />
+                android:layout_height="250dp"
+                android:visibility="gone" />
 
             <View
                 android:layout_width="match_parent"

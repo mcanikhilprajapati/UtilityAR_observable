@@ -57,9 +57,21 @@
                 </ScrollView>
 
 
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/img_task_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:visibility="gone" />
 
+                <WebView
+                    android:id="@+id/webview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5" />
 
                 <androidx.media3.ui.PlayerView
+                    android:visibility="gone"
                     android:id="@+id/videoView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

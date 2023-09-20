@@ -20,7 +20,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.media3.common.MediaItem;
-import androidx.media3.common.Player;
 import androidx.media3.exoplayer.ExoPlayer;
 import androidx.media3.ui.PlayerView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,14 +46,14 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private Context context;
     private ArrayList<StepsResponse> arrayList;
     private OnViewPagerClickListener onViewPagerClickListener;
+    ExoPlayer player;
 
 
     public StepsPagerAdapter(Context context, ArrayList<StepsResponse> courseModalArrayList, OnViewPagerClickListener onViewPagerClickListener) {
         this.context = context;
         this.arrayList = courseModalArrayList;
         this.onViewPagerClickListener = onViewPagerClickListener;
-
-
+        player = new ExoPlayer.Builder(context).build();
     }
 
     @NonNull
@@ -74,6 +73,8 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         else
             return 1;
     }
+
+
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
@@ -300,34 +301,17 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 videoViewHolder.btnTextAdd.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
             }
 
-
-            videoViewHolder.playerView.setUseController(false);
-            MediaItem mediaItem = MediaItem.fromUri(stepsResponse.getMedia());
-            videoViewHolder.player.setMediaItem(mediaItem);
-            videoViewHolder.player.prepare();
-
-
-            videoViewHolder.playerView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
-                @Override
-                public void onViewAttachedToWindow(View v) {
-                    Toast.makeText(context, "start", Toast.LENGTH_SHORT).show();
-                    if (videoViewHolder.playerView != null) {
-                        videoViewHolder.player.setPlayWhenReady(true);
-                        videoViewHolder.player.getPlaybackState();
-                    }
-                }
-
-                @Override
-                public void onViewDetachedFromWindow(View v) {
-                    Toast.makeText(context, "stop", Toast.LENGTH_SHORT).show();
-                    if (videoViewHolder.playerView != null) {
-                        videoViewHolder.player.setPlayWhenReady(false);
-                        videoViewHolder.player.getPlaybackState();
-                    }
-
-
-                }
-            });
+//            videoViewHolder.playerView.setPlayer(player);
+//            videoViewHolder.playerView.setUseController(false);
+//            MediaItem mediaItem = MediaItem.fromUri(stepsResponse.getMedia());
+//            player.setMediaItem(mediaItem);
+//            player.prepare();
+//            if (curretnPageIndex == position) {
+//                player.play();
+//            } else {
+//                player.setPlayWhenReady(false);
+//                player.getPlaybackState();
+//            }
 
         }
     }
@@ -337,6 +321,7 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public int getItemCount() {
         return arrayList.size();
     }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private Button btn_next, btn_back, btn_home, btnTextAdd, btn_camera, btn_input_type;
@@ -363,12 +348,12 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
-    public class VideoViewHolder extends RecyclerView.ViewHolder implements Player.Listener {
+    public class VideoViewHolder extends RecyclerView.ViewHolder {
         private Button btn_next, btn_back, btn_home, btnTextAdd, btn_camera, btn_input_type;
         private TextView txt_step_name, txt_description;
         private PlayerView playerView;
         private ScrollView sc_txt_description;
-        ExoPlayer player;
+
 
         public VideoViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -383,15 +368,10 @@ public class StepsPagerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             btn_camera = itemView.findViewById(R.id.btn_camera);
             btn_input_type = itemView.findViewById(R.id.btn_input_type);
             sc_txt_description = itemView.findViewById(R.id.sc_txt_description);
-            player = new ExoPlayer.Builder(itemView.getContext()).build();
-            playerView.setPlayer(player);
-            player.addListener(this);
+
+
         }
 
-        @Override
-        public void onEvents(Player player, Player.Events events) {
-            Player.Listener.super.onEvents(player, events);
-        }
 
     }
 
