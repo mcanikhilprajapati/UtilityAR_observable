@@ -34,10 +34,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginScreenActivity extends BaseActivity implements View.OnClickListener {
-    AppCompatButton btnLogin, btnHeadsetMode;
-    AppCompatEditText edtUsername, edtPassword;
-    ProgressBar progressBar;
-    LinearLayoutCompat main_container;
+    private AppCompatButton btnLogin, btnHeadsetMode;
+    private AppCompatEditText edtUsername, edtPassword;
+    private ProgressBar progressBar;
+    private LinearLayoutCompat main_container;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class LoginScreenActivity extends BaseActivity implements View.OnClickLis
         initUI();
 
         //Check for stored session and refresh token if already logded in.
-        if (SessionManager.pref.getString(JWT, "") != "") {
+        if (!TextUtils.isEmpty(SessionManager.pref.getString(JWT, ""))) {
             main_container.setVisibility(View.GONE);
             getToken(SessionManager.pref.getString(JWT, ""));
         } else {
@@ -156,6 +156,8 @@ public class LoginScreenActivity extends BaseActivity implements View.OnClickLis
                         //Let user move to next login screen
                         gotoLoginScreen();
                     }
+                }else {
+                    main_container.setVisibility(View.VISIBLE);
                 }
 
             }

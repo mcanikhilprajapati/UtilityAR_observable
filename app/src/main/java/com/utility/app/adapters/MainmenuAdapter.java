@@ -1,5 +1,6 @@
 package com.utility.app.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +39,7 @@ public class MainmenuAdapter extends RecyclerView.Adapter<MainmenuAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MainmenuAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MainmenuAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         // setting data to our text views from our modal class.
         MainMenuResponse courses = courseModalArrayList.get(position);
         holder.name.setText(courses.getName());

@@ -2,6 +2,8 @@ package com.utility.app;
 
 import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
 
+import static com.utility.app.StepsDetailsScreenActivity.globlestepsList;
+
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -556,7 +558,7 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
                         cameraImage.setVisibility(View.GONE);
                         fileURI = null;
                         Toast.makeText(getApplicationContext(), "Submitted", Toast.LENGTH_SHORT).show();
-                        if (isFromStepScreen && stepIndex > 0) {
+                        if (isFromStepScreen && stepIndex >= 0) {
                             if (isFromImageScreen) {
                                 globlestepsList.get(stepIndex).setMediaSubmitted(true);
                             } else {

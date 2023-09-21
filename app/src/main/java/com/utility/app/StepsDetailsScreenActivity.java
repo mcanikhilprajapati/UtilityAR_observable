@@ -23,16 +23,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class StepsDetailsScreenActivity extends BaseActivity implements OnViewPagerClickListener {
-    //    private Button btn_next, btn_back;
-    String procedureID = "";
-    String menuID = "";
-
-    ProgressBar progressBar;
+    private String procedureID = "";
+    private String menuID = "";
+    private ProgressBar progressBar;
     private ViewPager2 viewPager;
-    //    private StepsPagerAdapter pagerAdapter;
-    StepsFragmentStateAdapter stepsFragmentStateAdapter;
+    private StepsFragmentStateAdapter stepsFragmentStateAdapter;
     private LinearLayout txt_nodata;
     private Button btn_back;
+    public static ArrayList<StepsResponse> globlestepsList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,28 +54,11 @@ public class StepsDetailsScreenActivity extends BaseActivity implements OnViewPa
         });
 
         viewPager = findViewById(R.id.viewPager);
-//        pagerAdapter = new StepsPagerAdapter(getApplicationContext(), globlestepsList, this);
-        stepsFragmentStateAdapter = new StepsFragmentStateAdapter(this, globlestepsList,this);
+        stepsFragmentStateAdapter = new StepsFragmentStateAdapter(this, globlestepsList, this);
         viewPager.setAdapter(stepsFragmentStateAdapter);
         viewPager.setOffscreenPageLimit(1);
         viewPager.setUserInputEnabled(false);
-        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
-            }
 
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                super.onPageScrollStateChanged(state);
-            }
-        });
     }
 
     private void getStespList() {

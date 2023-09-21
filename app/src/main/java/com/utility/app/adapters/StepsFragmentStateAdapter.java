@@ -11,7 +11,7 @@ import com.utility.app.models.StepsResponse;
 
 import java.util.ArrayList;
 
-public class StepsFragmentStateAdapter extends FragmentStateAdapter implements OnViewPagerClickListener {
+public class StepsFragmentStateAdapter extends FragmentStateAdapter {
 
     private ArrayList<StepsResponse> arrayList;
     OnViewPagerClickListener onViewPagerClickListener;
@@ -26,8 +26,7 @@ public class StepsFragmentStateAdapter extends FragmentStateAdapter implements O
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-
-        return new StepsPageFragment(position, position >= arrayList.size() - 1, this);
+        return new StepsPageFragment(arrayList.get(position), position, position >= arrayList.size() - 1, onViewPagerClickListener);
     }
 
     @Override
@@ -40,23 +39,4 @@ public class StepsFragmentStateAdapter extends FragmentStateAdapter implements O
         return this.arrayList.size();
     }
 
-    @Override
-    public void onNextClick(int position) {
-        onViewPagerClickListener.onNextClick(position);
-    }
-
-    @Override
-    public void onBackClick(int position) {
-        onViewPagerClickListener.onBackClick(position);
-    }
-
-    @Override
-    public void onHomeClick(int position) {
-        onViewPagerClickListener.onHomeClick(position);
-    }
-
-    @Override
-    public void onButtonClick(int position, boolean image) {
-        onViewPagerClickListener.onButtonClick(position,image);
-    }
 }

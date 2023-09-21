@@ -36,7 +36,7 @@ public class ProcedureScreenActivity extends BaseActivity {
     private ProcedureAdapter procedureAdapter;
     private Button btnBack;
     private SwipeRefreshLayout swipeRefreshLayout;
-    String menuID = "";
+    private  String menuID = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +103,6 @@ public class ProcedureScreenActivity extends BaseActivity {
                         rvProcedure.setVisibility(View.GONE);
                     }
                 } else {
-                    Toast.makeText(ProcedureScreenActivity.this, "Fail", Toast.LENGTH_SHORT).show();
                     rvProcedure.setVisibility(View.GONE);
                 }
 
@@ -113,7 +112,6 @@ public class ProcedureScreenActivity extends BaseActivity {
             public void onFailure(Call<ArrayList<ProcedureResponse>> call, Throwable t) {
                 swipeRefreshLayout.setRefreshing(false);
                 rvProcedure.setVisibility(View.GONE);
-                Toast.makeText(ProcedureScreenActivity.this, "Fail 1", Toast.LENGTH_SHORT).show();
             }
         });
     }

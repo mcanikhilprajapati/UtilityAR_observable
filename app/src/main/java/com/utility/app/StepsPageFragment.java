@@ -1,5 +1,7 @@
 package com.utility.app;
 
+import static com.utility.app.StepsDetailsScreenActivity.globlestepsList;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -15,7 +17,6 @@ import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -58,8 +59,8 @@ public class StepsPageFragment extends Fragment {
 
     }
 
-    public StepsPageFragment(int position, boolean isLast, OnViewPagerClickListener onViewPagerClickListener) {
-        this.stepsResponse = BaseActivity.globlestepsList.get(position);
+    public StepsPageFragment(StepsResponse stepsResponse, int position, boolean isLast, OnViewPagerClickListener onViewPagerClickListener) {
+        this.stepsResponse = stepsResponse;
         this.isLast = isLast;
         this.position = position;
         this.onViewPagerClickListener = onViewPagerClickListener;
@@ -215,11 +216,10 @@ public class StepsPageFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if (player != null) {
-//            player.seekTo(0);
             player.setPlayWhenReady(true);
             player.getPlaybackState();
         }
-        this.stepsResponse = BaseActivity.globlestepsList.get(position);
+        this.stepsResponse = globlestepsList.get(position);
         reRenderButtons();
     }
 
@@ -243,15 +243,11 @@ public class StepsPageFragment extends Fragment {
                     getActivity().runOnUiThread(() -> {
                         reRenderButtons();
                     });
-                    Toast.makeText(context, "Submitted", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<SurveyResponse> call, Throwable t) {
-                Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
             }
 
         });

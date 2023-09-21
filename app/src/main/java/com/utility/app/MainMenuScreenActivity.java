@@ -114,7 +114,6 @@ public class MainMenuScreenActivity extends BaseActivity {
                         courseRV.setVisibility(View.GONE);
                     }
                 } else {
-                    Toast.makeText(MainMenuScreenActivity.this, "Fail", Toast.LENGTH_SHORT).show();
                     courseRV.setVisibility(View.GONE);
                 }
 
@@ -124,7 +123,6 @@ public class MainMenuScreenActivity extends BaseActivity {
             public void onFailure(Call<ArrayList<MainMenuResponse>> call, Throwable t) {
                 swipeRefreshLayout.setRefreshing(false);
                 courseRV.setVisibility(View.GONE);
-                Toast.makeText(MainMenuScreenActivity.this, "Fail 1", Toast.LENGTH_SHORT).show();
             }
         });
     }
