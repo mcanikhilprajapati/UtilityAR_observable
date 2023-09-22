@@ -43,23 +43,13 @@ public class MainmenuAdapter extends RecyclerView.Adapter<MainmenuAdapter.ViewHo
         // setting data to our text views from our modal class.
         MainMenuResponse courses = courseModalArrayList.get(position);
         holder.name.setText(courses.getName());
-        holder.name.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        holder.name.setOnClickListener(v -> {
 
-                if (onItemClickListener != null) {
-                    onItemClickListener.onItemClick(position);
-                }
+            if (onItemClickListener != null) {
+                onItemClickListener.onItemClick(position);
             }
         });
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (onItemClickListener != null) {
-                    onItemClickListener.onItemClick(position);
-                }
-            }
-        });
+
     }
 
     @Override
