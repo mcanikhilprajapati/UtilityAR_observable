@@ -398,7 +398,7 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
                         setupMainmenuSpinner();
 
                         runOnUiThread(() -> {
-                            for (int position = 0; position < mainmenuList.size() - 1; position++) {
+                            for (int position = 0; position < mainmenuList.size() ; position++) {
                                 MainMenuResponse value = mainmenuList.get(position);
                                 if (value.getId() != null && value.getId().equals(menuID)) {
                                     spinnerMenu.setSelection(position);
@@ -440,7 +440,7 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
                         setupProcedureSpinner();
 
                         runOnUiThread(() -> {
-                            for (int position = 0; position < procedureList.size() - 1; position++) {
+                            for (int position = 0; position < procedureList.size(); position++) {
                                 ProcedureResponse value = procedureList.get(position);
                                 if (value.getId() != null && value.getId().equals(procedureID)) {
                                     spProcedure.setSelection(position);
@@ -488,7 +488,7 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
 
 
                         runOnUiThread(() -> {
-                            for (int position = 0; position < stepsList.size() - 1; position++) {
+                            for (int position = 0; position < stepsList.size(); position++) {
                                 StepsResponse value = stepsList.get(position);
                                 if (value.getId() != null && value.getId().equals(stepID)) {
                                     spSteps.setSelection(position);
