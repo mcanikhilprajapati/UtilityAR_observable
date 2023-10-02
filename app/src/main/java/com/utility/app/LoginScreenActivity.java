@@ -49,7 +49,7 @@ public class LoginScreenActivity extends BaseActivity implements View.OnClickLis
         //Check for stored session and refresh token if already logded in.
         if (!TextUtils.isEmpty(SessionManager.pref.getString(JWT, ""))) {
             main_container.setVisibility(View.GONE);
-            getToken(SessionManager.pref.getString(JWT, ""));
+            getToken();
         } else {
             edtUsername.setText(SessionManager.pref.getString(EMAIL, ""));
             edtUsername.requestFocus();
@@ -120,7 +120,7 @@ public class LoginScreenActivity extends BaseActivity implements View.OnClickLis
                         SessionManager.getInstance().setValue(GROUPCALL_ID, loginResponse.getGroupCallId());
                         SessionManager.getInstance().setValue(EMAIL, loginResponse.getEmail());
 
-                        getToken(loginResponse.getJwt());
+                        getToken();
                     } else {
                         Toast.makeText(LoginScreenActivity.this, "Something went wrong at login", Toast.LENGTH_SHORT).show();
                     }
@@ -143,7 +143,7 @@ public class LoginScreenActivity extends BaseActivity implements View.OnClickLis
     }
 
     //    //Get new access token everytime when user open app
-    private void getToken(String t) {
+    private void getToken() {
         progressBar.setVisibility(View.VISIBLE);
         ApiClient.getToken(getApplicationContext(), true).enqueue(new Callback<TokenResponse>() {
             @Override

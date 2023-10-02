@@ -60,7 +60,7 @@ public class StepsDetailsScreenActivity extends BaseActivity implements OnViewPa
         viewPager.setUserInputEnabled(false);
 
     }
-
+    /* < GET LIST OF STEPS> */
     private void getStespList() {
         globlestepsList.clear();
         progressBar.setVisibility(View.VISIBLE);

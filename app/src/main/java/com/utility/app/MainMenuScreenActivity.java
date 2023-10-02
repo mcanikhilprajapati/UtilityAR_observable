@@ -1,19 +1,10 @@
 package com.utility.app;
 
-import static com.utility.app.SessionManager.SCREEN_MODE;
-
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,6 +32,7 @@ public class MainMenuScreenActivity extends BaseActivity {
     private MainmenuAdapter mainmenuAdapter;
     private Button btn_make_observation, btnChangeUser;
     private SwipeRefreshLayout swipeRefreshLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +45,7 @@ public class MainMenuScreenActivity extends BaseActivity {
             @Override
             public void onItemClick(int position) {
                 Intent intent = new Intent(getApplicationContext(), ProcedureScreenActivity.class);
-                intent.putExtra(Constant.menuID,mainmenuList.get(position).getId());
+                intent.putExtra(Constant.menuID, mainmenuList.get(position).getId());
                 startActivity(intent);
             }
 
@@ -95,7 +87,7 @@ public class MainMenuScreenActivity extends BaseActivity {
     }
 
 
-
+    /* < GET LIST OF MAIN MENU BASED ON USER> */
     private void getMainMenuList() {
         mainmenuList.clear();
         swipeRefreshLayout.setRefreshing(true);
@@ -126,8 +118,6 @@ public class MainMenuScreenActivity extends BaseActivity {
             }
         });
     }
-
-
 
 
 }

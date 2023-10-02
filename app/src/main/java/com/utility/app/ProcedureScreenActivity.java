@@ -85,7 +85,7 @@ public class ProcedureScreenActivity extends BaseActivity {
         });
     }
 
-
+    /* < GET LIST OF PROCEDURES> */
     private void getProcedureList() {
         procedureList.clear();
         swipeRefreshLayout.setRefreshing(true);
