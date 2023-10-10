@@ -28,7 +28,7 @@ public class StepsFragmentStateAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        if(arrayList.get(position).getMediaType().equalsIgnoreCase("VIDEO")){
+        if(arrayList.get(position).getMediaType().equalsIgnoreCase("AR")){
             return new ArFragment(arrayList.get(position), position, position >= arrayList.size() - 1, onViewPagerClickListener);
         }else {
             return new StepsPageFragment(arrayList.get(position), position, position >= arrayList.size() - 1, onViewPagerClickListener);
