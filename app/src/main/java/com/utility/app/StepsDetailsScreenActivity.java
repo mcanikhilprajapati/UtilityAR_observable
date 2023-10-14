@@ -13,6 +13,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.utility.app.adapters.StepsFragmentStateAdapter;
 import com.utility.app.listener.OnViewPagerClickListener;
 import com.utility.app.models.StepsResponse;
+import com.utility.app.models.request.Useractivity;
 import com.utility.app.retrofit.ApiClient;
 import com.utilityar.app.R;
 
@@ -41,6 +42,9 @@ public class StepsDetailsScreenActivity extends BaseActivity implements OnViewPa
         procedureID = myIntent.getStringExtra(Constant.procedureID);
         menuID = myIntent.getStringExtra(Constant.menuID);
         initUI();
+
+        Useractivity useractivity = new Useractivity("Steps Screen",Constant.userTrackerAction.SCREEN_OPEN.toString());
+        trackUserActivity( useractivity);
         getStespList();
     }
 
@@ -97,7 +101,8 @@ public class StepsDetailsScreenActivity extends BaseActivity implements OnViewPa
 
     @Override
     public void onNextClick(int position) {
-
+        Useractivity useractivity = new Useractivity(globlestepsList.get(position).getName(),Constant.userTrackerAction.BUTTON_CLICKED.toString(),"NEXT");
+        trackUserActivity( useractivity);
         if (position >= globlestepsList.size() - 1) {
             Intent intent = new Intent(StepsDetailsScreenActivity.this, CompleteScreenActivity.class);
             startActivity(intent);
@@ -109,6 +114,8 @@ public class StepsDetailsScreenActivity extends BaseActivity implements OnViewPa
 
     @Override
     public void onBackClick(int position) {
+        Useractivity useractivity = new Useractivity(globlestepsList.get(position).getName(),Constant.userTrackerAction.BUTTON_CLICKED.toString(),"BACK");
+        trackUserActivity( useractivity);
         if (position == 0) {
             finish();
         } else {
@@ -118,6 +125,8 @@ public class StepsDetailsScreenActivity extends BaseActivity implements OnViewPa
 
     @Override
     public void onHomeClick(int position) {
+        Useractivity useractivity = new Useractivity(globlestepsList.get(position).getName(),Constant.userTrackerAction.BUTTON_CLICKED.toString(),"HOME");
+        trackUserActivity( useractivity);
         Intent intent = new Intent(StepsDetailsScreenActivity.this, MainMenuScreenActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
@@ -127,6 +136,10 @@ public class StepsDetailsScreenActivity extends BaseActivity implements OnViewPa
 
     @Override
     public void onButtonClick(int position, boolean isForImage) {
+
+        Useractivity useractivity = new Useractivity(globlestepsList.get(position).getName(),Constant.userTrackerAction.BUTTON_CLICKED.toString(),isForImage?"CAMERA" :"TEXT");
+        trackUserActivity( useractivity);
+
         Intent intent = new Intent(StepsDetailsScreenActivity.this, MakeObservationActivity.class);
         intent.putExtra(Constant.stepID, globlestepsList.get(position).getId());
         intent.putExtra(Constant.menuID, menuID);

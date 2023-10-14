@@ -34,9 +34,11 @@ import com.utility.app.listener.OnViewPagerClickListener;
 import com.utility.app.models.StepsResponse;
 import com.utility.app.models.SurveyResponse;
 import com.utility.app.models.request.SurveyRequest;
+import com.utility.app.models.request.Useractivity;
 import com.utility.app.retrofit.ApiClient;
 import com.utilityar.app.R;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -194,6 +196,10 @@ public class StepsPageFragment extends Fragment {
                 stepsResponse.setInputDataType(menuItem.getTitle().toString());
                 stepsResponse.setInputSubmitted(true);
                 btn_input_type.setText(menuItem.getTitle().toString());
+
+                Useractivity useractivity = new Useractivity(globlestepsList.get(position).getName(), Constant.userTrackerAction.SELECT.toString(), menuItem.getTitle().toString());
+                trackUserActivity(useractivity);
+
                 submitTask(context, stepsResponse, menuItem.getTitle().toString());
                 return true;
             });
@@ -201,6 +207,21 @@ public class StepsPageFragment extends Fragment {
         });
         reRenderButtons();
 
+    }
+
+    private void trackUserActivity(Useractivity useractivity) {
+
+        ApiClient.userActivityTracker(useractivity).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.utility.app;
 
 import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
-
 import static com.utility.app.StepsDetailsScreenActivity.globlestepsList;
 
 import android.Manifest;
@@ -45,6 +44,7 @@ import com.utility.app.models.ProcedureResponse;
 import com.utility.app.models.StepsResponse;
 import com.utility.app.models.SurveyResponse;
 import com.utility.app.models.request.SurveyRequest;
+import com.utility.app.models.request.Useractivity;
 import com.utility.app.retrofit.ApiClient;
 import com.utilityar.app.R;
 
@@ -205,6 +205,9 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
         edt_comment = findViewById(R.id.edt_comment);
         cameraImage = findViewById(R.id.camera_image);
         btn_next.setOnClickListener(v -> {
+            Useractivity useractivity = new Useractivity("Make an Obersvation", Constant.userTrackerAction.BUTTON_CLICKED.toString(), "SUBMIT");
+            trackUserActivity(useractivity);
+
             AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(MakeObservationActivity.this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar));
             builder.setTitle("Confirm !").setMessage("Are you sure want to submit task details ?")
                     .setCancelable(false)
@@ -224,12 +227,16 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
             alert.show();
         });
         btn_back.setOnClickListener(v -> {
+            Useractivity useractivity = new Useractivity("Make an Obersvation", Constant.userTrackerAction.BUTTON_CLICKED.toString(), "BACK");
+            trackUserActivity(useractivity);
             finish();
         });
         setupPrioritySpinner();
         getMainMenuList();
 
         btn_camera.setOnClickListener(v -> {
+            Useractivity useractivity = new Useractivity("Make an Obersvation", Constant.userTrackerAction.BUTTON_CLICKED.toString(), "CAMERA");
+            trackUserActivity(useractivity);
             if (hasPermissions(getApplicationContext())) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(MakeObservationActivity.this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar));
                 builder.setTitle("Take action !").setMessage("Select Video or Image Capture Options")
@@ -253,6 +260,9 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
         });
 
         player = new ExoPlayer.Builder(MakeObservationActivity.this).build();
+
+        Useractivity useractivity = new Useractivity("Make an Obersvation", Constant.userTrackerAction.SCREEN_OPEN.toString());
+        trackUserActivity(useractivity);
 
     }
 
@@ -380,6 +390,21 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
         ArrayAdapter ad = new ArrayAdapter(this, android.R.layout.simple_spinner_item, priority);
         ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spPriority.setAdapter(ad);
+        spPriority.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (position > 0) {
+                    Useractivity useractivity = new Useractivity("Make an Obersvation", Constant.userTrackerAction.PRIORITY.toString(), priority[spPriority.getSelectedItemPosition()]);
+                    trackUserActivity(useractivity);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
 
@@ -398,7 +423,7 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
                         setupMainmenuSpinner();
 
                         runOnUiThread(() -> {
-                            for (int position = 0; position < mainmenuList.size() ; position++) {
+                            for (int position = 0; position < mainmenuList.size(); position++) {
                                 MainMenuResponse value = mainmenuList.get(position);
                                 if (value.getId() != null && value.getId().equals(menuID)) {
                                     spinnerMenu.setSelection(position);

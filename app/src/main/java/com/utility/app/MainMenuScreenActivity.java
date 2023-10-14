@@ -13,6 +13,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.utility.app.adapters.MainmenuAdapter;
 import com.utility.app.listener.OnItemClickListener;
 import com.utility.app.models.MainMenuResponse;
+import com.utility.app.models.request.Useractivity;
 import com.utility.app.retrofit.ApiClient;
 import com.utilityar.app.R;
 
@@ -44,6 +45,9 @@ public class MainMenuScreenActivity extends BaseActivity {
         mainmenuAdapter = new MainmenuAdapter(this, mainmenuList, new OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
+                Useractivity useractivity = new Useractivity(mainmenuList.get(position).getName(),Constant.userTrackerAction.SCREEN_OPEN.toString());
+                trackUserActivity( useractivity);
+
                 Intent intent = new Intent(getApplicationContext(), ProcedureScreenActivity.class);
                 intent.putExtra(Constant.menuID, mainmenuList.get(position).getId());
                 startActivity(intent);
@@ -59,7 +63,11 @@ public class MainMenuScreenActivity extends BaseActivity {
         courseRV.setAdapter(mainmenuAdapter);
         getMainMenuList();
 
+        Useractivity useractivity = new Useractivity("Mainmenu",Constant.userTrackerAction.SCREEN_OPEN.toString());
+        trackUserActivity( useractivity);
     }
+
+
 
     private void initUI() {
         // initializing our variables.

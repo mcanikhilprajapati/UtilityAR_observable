@@ -18,6 +18,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.utility.app.adapters.ProcedureAdapter;
 import com.utility.app.listener.OnItemClickListener;
 import com.utility.app.models.ProcedureResponse;
+import com.utility.app.models.request.Useractivity;
 import com.utility.app.retrofit.ApiClient;
 import com.utilityar.app.R;
 
@@ -50,6 +51,8 @@ public class ProcedureScreenActivity extends BaseActivity {
         procedureAdapter = new ProcedureAdapter(this, procedureList, new OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
+                Useractivity useractivity = new Useractivity(procedureList.get(position).getName(),Constant.userTrackerAction.SCREEN_OPEN.toString());
+                trackUserActivity( useractivity);
                 Intent intent = new Intent(getApplicationContext(), StepsDetailsScreenActivity.class);
                 intent.putExtra(Constant.procedureID,procedureList.get(position).getId());
                 intent.putExtra(Constant.menuID,menuID);
@@ -65,6 +68,7 @@ public class ProcedureScreenActivity extends BaseActivity {
         rvProcedure.setLayoutManager(manager);
         rvProcedure.setAdapter(procedureAdapter);
         getProcedureList();
+
     }
 
     private void initUI() {

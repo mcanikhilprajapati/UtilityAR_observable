@@ -9,9 +9,11 @@ import com.utility.app.models.SurveyResponse;
 import com.utility.app.models.TokenResponse;
 import com.utility.app.models.request.LoginRequest;
 import com.utility.app.models.request.SurveyRequest;
+import com.utility.app.models.request.Useractivity;
 
 import java.util.ArrayList;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -40,4 +42,7 @@ public interface ApiInterface {
 
     @POST("completedSurvey/create")
     Call<SurveyResponse> createSurvey(@Body SurveyRequest params);
+
+    @POST("userActivity/create")
+    Call<ResponseBody> userActivityTracker(@Body Useractivity params);
 }

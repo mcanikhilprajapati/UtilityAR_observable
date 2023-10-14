@@ -12,10 +12,12 @@ import com.utility.app.models.LoginResponse;
 import com.utility.app.models.TokenResponse;
 import com.utility.app.models.request.ProcedureRequest;
 import com.utility.app.models.request.SurveyRequest;
+import com.utility.app.models.request.Useractivity;
 
 import java.util.ArrayList;
 import java.util.Map;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 
 // https://gist.github.com/dinukapj/b315e5f4438bc670d7509f7aa7aaffdd
@@ -43,5 +45,9 @@ public class ApiClient {
     }
     public static Call<SurveyResponse> createSurvey(Context context, boolean showLoader, SurveyRequest surveyRequest) {
         return getClient().createSurvey(surveyRequest);
+    }
+
+    public static Call<ResponseBody> userActivityTracker(Useractivity params) {
+        return getClient().userActivityTracker(params);
     }
 }
