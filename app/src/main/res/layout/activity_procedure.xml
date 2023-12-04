@@ -48,7 +48,6 @@
             android:id="@+id/idRVCourses"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:nestedScrollingEnabled="false"
             android:padding="10dp" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

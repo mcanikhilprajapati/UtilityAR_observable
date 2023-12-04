@@ -551,12 +551,15 @@ public class MakeObservationActivity extends BaseActivity implements OnFileUploa
 
         if (spinnerMenu.getSelectedItemPosition() > 0) {
             surveyRequest.setMenuId(mainmenuList.get(spinnerMenu.getSelectedItemPosition()).getId());
+            surveyRequest.setMenuName(mainmenuList.get(spinnerMenu.getSelectedItemPosition()).getName());
         }
         if (spProcedure.getSelectedItemPosition() > 0 && procedureList.size() > 0) {
             surveyRequest.setProcedureId(procedureList.get(spProcedure.getSelectedItemPosition()).getId());
+            surveyRequest.setProcedureName(procedureList.get(spProcedure.getSelectedItemPosition()).getName());
         }
         if (spSteps.getSelectedItemPosition() > 0 && stepsList.size() > 0) {
             surveyRequest.setStepId(stepsList.get(spSteps.getSelectedItemPosition()).getId());
+            surveyRequest.setStepName(stepsList.get(spSteps.getSelectedItemPosition()).getName());
         }
 
 

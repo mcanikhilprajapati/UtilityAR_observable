@@ -1,6 +1,5 @@
 package com.utility.app;
 
-
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.media.Image;
@@ -47,7 +46,8 @@ import com.google.ar.core.exceptions.UnavailableArcoreNotInstalledException;
 import com.google.ar.core.exceptions.UnavailableDeviceNotCompatibleException;
 import com.google.ar.core.exceptions.UnavailableSdkTooOldException;
 import com.google.ar.core.exceptions.UnavailableUserDeclinedInstallationException;
-import com.utility.app.common.helpers.CameraPermissionHelper;
+
+
 import com.utility.app.common.helpers.DepthSettings;
 import com.utility.app.common.helpers.DisplayRotationHelper;
 import com.utility.app.common.helpers.InstantPlacementSettings;
@@ -64,11 +64,12 @@ import com.utility.app.common.samplerender.VertexBuffer;
 import com.utility.app.common.samplerender.arcore.BackgroundRenderer;
 import com.utility.app.common.samplerender.arcore.PlaneRenderer;
 import com.utility.app.common.samplerender.arcore.SpecularCubemapFilter;
+
+import com.utility.app.common.helpers.CameraPermissionHelper;
 import com.utility.app.listener.OnViewPagerClickListener;
 import com.utility.app.models.StepsResponse;
 import com.utility.app.util.WrappedAnchor;
 import com.utilityar.app.R;
-
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -235,23 +236,32 @@ public class ArFragment extends Fragment implements SampleRender.Renderer {
 
         depthSettings.onCreate(requireActivity());
         instantPlacementSettings.onCreate(requireActivity());
-//        ImageButton settingsButton = view.findViewById(R.id.settings_button);
-//        settingsButton.setOnClickListener(
-//                v -> {
-//                    PopupMenu popup = new PopupMenu(requireActivity(), v);
-//                    popup.setOnMenuItemClickListener(menuItem -> {
-//                        if (menuItem.getItemId() == R.id.depth_settings) {
-//                            launchDepthSettingsMenuDialog();
-//                            return true;
-//                        } else if (menuItem.getItemId() == R.id.instant_placement_settings) {
-//                            launchInstantPlacementSettingsMenuDialog();
-//                            return true;
-//                        }
-//                        return false;
-//                    });
-//                    popup.inflate(R.menu.settings_menu);
-//                    popup.show();
-//                });
+        ImageButton settingsButton = view.findViewById(R.id.settings_button);
+        settingsButton.setOnClickListener(
+                v -> {
+                    PopupMenu popup = new PopupMenu(requireActivity(), v);
+                    popup.setOnMenuItemClickListener(menuItem -> {
+                        if (menuItem.getItemId() == R.id.depth_settings) {
+                            launchDepthSettingsMenuDialog();
+                            return true;
+                        } else if (menuItem.getItemId() == R.id.instant_placement_settings) {
+                            launchInstantPlacementSettingsMenuDialog();
+                            return true;
+                        } else if (menuItem.getItemId() == R.id.remove_all_object) {
+                            /**
+                             * Added new menu option to remove all objects from surface
+                             **/
+                            if (wrappedAnchors.size() != 0) {
+                                wrappedAnchors.get(0).getAnchor().detach();
+                                wrappedAnchors.remove(0);
+                            }
+                            return true;
+                        }
+                        return false;
+                    });
+                    popup.inflate(R.menu.settings_menu);
+                    popup.show();
+                });
     }
 
     @Override
@@ -557,7 +567,16 @@ public class ArFragment extends Fragment implements SampleRender.Renderer {
                         || (trackable instanceof DepthPoint)) {
                     // Cap the number of objects created. This avoids overloading both the
                     // rendering system and ARCore.
-                    if (wrappedAnchors.size() >= 20) {
+//                    if (wrappedAnchors.size() >= 20) {
+//                        wrappedAnchors.get(0).getAnchor().detach();
+//                        wrappedAnchors.remove(0);
+//                    }
+
+                    /**
+                     * Code for remove last object placed on screen
+                     * As we are allowing only on object placed at a time
+                     **/
+                    if (wrappedAnchors.size() != 0) {
                         wrappedAnchors.get(0).getAnchor().detach();
                         wrappedAnchors.remove(0);
                     }

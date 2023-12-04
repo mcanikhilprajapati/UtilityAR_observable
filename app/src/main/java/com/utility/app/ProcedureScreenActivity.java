@@ -38,6 +38,7 @@ public class ProcedureScreenActivity extends BaseActivity {
     private Button btnBack;
     private SwipeRefreshLayout swipeRefreshLayout;
     private  String menuID = "";
+    private  String menuName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,7 @@ public class ProcedureScreenActivity extends BaseActivity {
         setContentView(R.layout.activity_procedure);
         Intent myIntent = getIntent();
         menuID = myIntent.getStringExtra(Constant.menuID);
+        menuName = myIntent.getStringExtra(Constant.menuName);
         initUI();
 
         procedureAdapter = new ProcedureAdapter(this, procedureList, new OnItemClickListener() {
@@ -55,7 +57,9 @@ public class ProcedureScreenActivity extends BaseActivity {
                 trackUserActivity( useractivity);
                 Intent intent = new Intent(getApplicationContext(), StepsDetailsScreenActivity.class);
                 intent.putExtra(Constant.procedureID,procedureList.get(position).getId());
+                intent.putExtra(Constant.procedureName,procedureList.get(position).getName());
                 intent.putExtra(Constant.menuID,menuID);
+                intent.putExtra(Constant.menuName,menuName);
                 startActivity(intent);
             }
 

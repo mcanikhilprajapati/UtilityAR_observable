@@ -23,6 +23,44 @@ public class SurveyRequest {
     @Expose
     private String stepId= "";
 
+
+    @SerializedName("menuName")
+    @Expose
+    private String menuName= "";
+
+    @SerializedName("stepName")
+    @Expose
+    private String stepName= "";
+
+    public String getMenuName() {
+        return menuName;
+    }
+
+    public void setMenuName(String menuName) {
+        this.menuName = menuName;
+    }
+
+    public String getStepName() {
+        return stepName;
+    }
+
+    public void setStepName(String stepName) {
+        this.stepName = stepName;
+    }
+
+    public String getProcedureName() {
+        return procedureName;
+    }
+
+    public void setProcedureName(String procedureName) {
+        this.procedureName = procedureName;
+    }
+
+    @SerializedName("procedureName")
+    @Expose
+    private String procedureName= "";
+
+
     public String getPriority() {
         return priority;
     }

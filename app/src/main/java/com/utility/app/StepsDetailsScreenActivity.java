@@ -25,7 +25,9 @@ import retrofit2.Response;
 
 public class StepsDetailsScreenActivity extends BaseActivity implements OnViewPagerClickListener {
     private String procedureID = "";
+    private String procedureName = "";
     private String menuID = "";
+    private String menuName = "";
     private ProgressBar progressBar;
     private ViewPager2 viewPager;
     private StepsFragmentStateAdapter stepsFragmentStateAdapter;
@@ -39,8 +41,10 @@ public class StepsDetailsScreenActivity extends BaseActivity implements OnViewPa
 
         setContentView(R.layout.activity_steps_details_screen);
         Intent myIntent = getIntent();
+        procedureName = myIntent.getStringExtra(Constant.procedureName);
         procedureID = myIntent.getStringExtra(Constant.procedureID);
         menuID = myIntent.getStringExtra(Constant.menuID);
+        menuName = myIntent.getStringExtra(Constant.menuName);
         initUI();
 
         Useractivity useractivity = new Useractivity("Steps Screen",Constant.userTrackerAction.SCREEN_OPEN.toString());
@@ -58,7 +62,7 @@ public class StepsDetailsScreenActivity extends BaseActivity implements OnViewPa
         });
 
         viewPager = findViewById(R.id.viewPager);
-        stepsFragmentStateAdapter = new StepsFragmentStateAdapter(this, globlestepsList, this);
+        stepsFragmentStateAdapter = new StepsFragmentStateAdapter(this, globlestepsList, menuName,procedureName,this);
         viewPager.setAdapter(stepsFragmentStateAdapter);
         viewPager.setOffscreenPageLimit(1);
         viewPager.setUserInputEnabled(false);

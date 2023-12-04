@@ -8,7 +8,9 @@ public class Constant {
     public static final String connectionString = "DefaultEndpointsProtocol=https;AccountName=northeuropear;AccountKey=339kCknemCobYc2IwyopICznsm2RBZII6ExedQzTRQfLDs+Jgdb2RdmdhOQroib6aOlbmz5PErF4+AStmp0nRA==;EndpointSuffix=core.windows.net";
     //intent PARAMS
     public static final String menuID = "menuID";
+    public static final String menuName = "menuName";
     public static final String procedureID = "procedureID";
+    public static final String procedureName = "procedureName";
     public static final String stepID = "stepID";
     public static final String SCREEN_FROM_STEPS = "from";
     public static final String SCREEN_FROM_STEPS_CAMERA = "from_camera_allow";

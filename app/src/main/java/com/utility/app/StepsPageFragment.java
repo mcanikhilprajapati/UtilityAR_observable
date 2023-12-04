@@ -56,15 +56,18 @@ public class StepsPageFragment extends Fragment {
     private Context context;
     private boolean isLast = false;
     private int position = 0;
-
+    private String menuName = "";
+    private String procedureName = "";
     public StepsPageFragment() {
 
     }
 
-    public StepsPageFragment(StepsResponse stepsResponse, int position, boolean isLast, OnViewPagerClickListener onViewPagerClickListener) {
+    public StepsPageFragment(StepsResponse stepsResponse, int position, boolean isLast, String menuName,String procedureName,OnViewPagerClickListener onViewPagerClickListener) {
         this.stepsResponse = stepsResponse;
         this.isLast = isLast;
         this.position = position;
+        this.menuName = menuName;
+        this.procedureName = procedureName;
         this.onViewPagerClickListener = onViewPagerClickListener;
     }
 
@@ -255,6 +258,10 @@ public class StepsPageFragment extends Fragment {
     private void submitTask(Context context, StepsResponse stepsResponse, String inputType) {
 
         SurveyRequest surveyRequest = new SurveyRequest();
+        surveyRequest.setStepName(stepsResponse.getName());
+        surveyRequest.setMenuName(menuName);
+        surveyRequest.setProcedureName(procedureName);
+
         surveyRequest.setStepId(stepsResponse.getId());
         surveyRequest.setInputDataType(inputType);
         ApiClient.createSurvey(context, false, surveyRequest).enqueue(new Callback<SurveyResponse>() {

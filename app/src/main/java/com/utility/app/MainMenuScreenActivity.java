@@ -50,6 +50,7 @@ public class MainMenuScreenActivity extends BaseActivity {
 
                 Intent intent = new Intent(getApplicationContext(), ProcedureScreenActivity.class);
                 intent.putExtra(Constant.menuID, mainmenuList.get(position).getId());
+                intent.putExtra(Constant.menuName, mainmenuList.get(position).getName());
                 startActivity(intent);
             }
 
